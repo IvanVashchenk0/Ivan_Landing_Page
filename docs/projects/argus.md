@@ -1,0 +1,16 @@
+### Argus preview and full walkthrough
+
+`src/projects/argus/Preview.tsx` is the short portfolio hook. Its independent `previewTimeline.ts` defines PURCHASE (0–1.5s), INTERCEPT (1.5–2.8s), DECISION (2.8–3.9s), APPROVE signal (3.9–5.5s, resolved at 4.85s), and BRAND (5.5–6.5s), followed by a held COMPLETE state. A single clock drives the large transaction card approaching payment, 320ms capture into a gold inspection ring, dominant three-branch tree, thick selected signal, and 140ms final banner crossfade (fully resolved at 5.64s). Gold denotes active logic; only the illustrated APPROVE branch activates. No specific product, merchant, amount, policy internals, or backend technology appears in the short preview.
+
+The preview autoplays once at 40% visibility, freezes offscreen and in hidden tabs, preserves manual pause, and supports skip and keyboard replay. Reduced motion uses discrete states. Desktop keeps a wide 16:9 composition; mobile uses a vertical agent/Argus/decision flow and branching spine with all outcomes visible. The original banner is decoded ahead of completion, contained without distortion or text overlays, and has accessible retry on failure. The portrait images supplied in chat were references only: no corresponding repository artwork file was available, so no substitute illustration was generated or embedded.
+
+`ProjectExperience` selects the separate short preview on category/home exhibits and the original walkthrough for primary project-page experiences. It does not pass animation modes into either Argus component. `index.tsx`, the full walkthrough timeline, scene renderer, playback, technical content, and YouTube implementation remain unchanged.
+
+### Full Argus animation
+
+`src/projects/argus/scenario.ts` contains the controlled request, policy, purchase, structured interpretation, and pure policy/routing functions. `requires_approval` is produced by deterministic policy evaluation: an amount **above** $350 requires review if all hard checks pass. The supplied $278.49 purchase is within the $300 user budget. `within_hard_limit` is a provided boolean fixture; no unspecified numerical limit is invented. Model-assisted stages are authored examples, not claims of live inference.
+
+`timeline.ts` defines all 15 scene targets, totaling 37,500 ms including the one-second final crossfade. `useAnimationPlayback.ts` uses one accumulated animation-frame clock for scenes, field reveals, and connector progress. Visibility pauses preserve elapsed time; manual pauses survive scrolling. The pure routing function prioritizes hard failure (DENY), then approval required (REVIEW), then AUTHORIZE. The trace has no authorization state until the decision signal reaches its destination. A credential appears afterward, followed by payment enablement.
+
+Desktop uses a 16:9 stage. Portrait layouts reserve the natural height of all scenes to keep the page stable and show the three branches along a shared vertical spine. Scene content uses semantic HTML and SVG connectors; there is no video dependency for the animation. The original 8000×4500 `ARGUS Banner.png` is copied unchanged to `public/media/projects/argus/`, decoded before the final scene, and displayed with `object-fit: contain`. A failed load has a retry control. The banner is never recreated or replaced with another end card.
+

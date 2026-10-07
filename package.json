@@ -1,0 +1,42 @@
+{
+  "name": "ivan-landing-page",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "lint": "oxlint",
+    "preview": "vite preview",
+    "test": "playwright test",
+    "media:manifest": "node scripts/media/manifest.mjs",
+    "media:verify": "node scripts/media/verify.mjs",
+    "media:prepare": "node scripts/media/prepare.mjs",
+    "media:sync": "node scripts/media/sync.mjs",
+    "media:check": "node scripts/media/check.mjs",
+    "test:media": "MEDIA_REAL=1 playwright test --grep @real-media",
+    "validate": "npm run media:check && npm run lint && npm run build && npm test"
+  },
+  "dependencies": {
+    "@fontsource-variable/inter": "^5.3.0",
+    "@fontsource/ibm-plex-mono": "^5.3.0",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "react-router": "^7.18.4",
+    "three": "^0.186.1"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.63.0",
+    "@types/node": "^24.13.3",
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.7",
+    "@types/three": "^0.186.0",
+    "@vitejs/plugin-react": "^6.1.1",
+    "oxlint": "^1.81.0",
+    "typescript": "~6.0.2",
+    "vite": "^8.3.0"
+  },
+  "engines": {
+    "node": ">=22.12.0 <23"
+  }
+}

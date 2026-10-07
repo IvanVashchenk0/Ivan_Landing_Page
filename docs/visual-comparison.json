@@ -1,0 +1,168 @@
+[
+  {
+    "image": "_-1440.png",
+    "beforeSize": [
+      1440,
+      1000
+    ],
+    "afterSize": [
+      1440,
+      1000
+    ],
+    "changedPixels": 45520,
+    "changedPercent": 3.1611,
+    "differenceBounds": [
+      392,
+      664,
+      1440,
+      904
+    ]
+  },
+  {
+    "image": "_-390.png",
+    "beforeSize": [
+      390,
+      1000
+    ],
+    "afterSize": [
+      390,
+      1000
+    ],
+    "changedPixels": 1,
+    "changedPercent": 0.0003,
+    "differenceBounds": [
+      176,
+      678,
+      177,
+      679
+    ]
+  },
+  {
+    "image": "_-768.png",
+    "beforeSize": [
+      768,
+      1000
+    ],
+    "afterSize": [
+      768,
+      1000
+    ],
+    "changedPixels": 0,
+    "changedPercent": 0.0,
+    "differenceBounds": null
+  },
+  {
+    "image": "_ivan-1440.png",
+    "beforeSize": [
+      1440,
+      3803
+    ],
+    "afterSize": [
+      1440,
+      3803
+    ],
+    "changedPixels": 290689,
+    "changedPercent": 5.3081,
+    "differenceBounds": [
+      183,
+      572,
+      1368,
+      3490
+    ]
+  },
+  {
+    "image": "_ivan-390.png",
+    "beforeSize": [
+      390,
+      3059
+    ],
+    "afterSize": [
+      390,
+      3059
+    ],
+    "changedPixels": 108100,
+    "changedPercent": 9.0611,
+    "differenceBounds": [
+      24,
+      244,
+      366,
+      2768
+    ]
+  },
+  {
+    "image": "_ivan-768.png",
+    "beforeSize": [
+      768,
+      2625
+    ],
+    "afterSize": [
+      768,
+      2625
+    ],
+    "changedPixels": 116363,
+    "changedPercent": 5.772,
+    "differenceBounds": [
+      38,
+      360,
+      670,
+      2313
+    ]
+  },
+  {
+    "image": "_ivan_engineering-newsletter-1440.png",
+    "beforeSize": [
+      1440,
+      2029
+    ],
+    "afterSize": [
+      1440,
+      2029
+    ],
+    "changedPixels": 24264,
+    "changedPercent": 0.8305,
+    "differenceBounds": [
+      280,
+      483,
+      1159,
+      1599
+    ]
+  },
+  {
+    "image": "_ivan_engineering-newsletter-390.png",
+    "beforeSize": [
+      390,
+      1096
+    ],
+    "afterSize": [
+      390,
+      1096
+    ],
+    "changedPixels": 57665,
+    "changedPercent": 13.4908,
+    "differenceBounds": [
+      32,
+      386,
+      358,
+      798
+    ]
+  },
+  {
+    "image": "_ivan_engineering-newsletter-768.png",
+    "beforeSize": [
+      768,
+      1545
+    ],
+    "afterSize": [
+      768,
+      1545
+    ],
+    "changedPixels": 132954,
+    "changedPercent": 11.205,
+    "differenceBounds": [
+      58,
+      426,
+      710,
+      1206
+    ]
+  }
+]

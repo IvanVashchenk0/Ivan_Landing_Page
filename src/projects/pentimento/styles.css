@@ -1,0 +1,44 @@
+@layer components {
+  .object-viewer { position: relative; background: radial-gradient(ellipse at 52% 46%, #8c97642b, transparent 58%); }
+  .pentimento-experience { height: 590px; min-height: 590px; }
+  .pentimento-switch { display: grid; grid-template-columns: 1fr 1fr; position: absolute; top: 0; left: 0; width: 310px; height: 44px; border: 1px solid #57604b; isolation: isolate; }
+  .pentimento-switch-indicator { position: absolute; inset: 3px auto 3px 3px; width: calc(50% - 3px); background: #c4cbb7; transition: transform 750ms ease; z-index: -1; }
+  [data-view=model] .pentimento-switch-indicator { transform: translateX(100%); }
+  .pentimento-switch button { border: 0; background: transparent; color: #b8c2a8; font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: .045em; transition: color 750ms ease; }
+  .pentimento-switch button[aria-selected=true] { color: #22271f; }
+  .pentimento-switch button:focus-visible { outline-offset: -3px; }
+  .pentimento-panels { position: absolute; inset: 60px 0 0; }
+  .pentimento-panel { position: absolute; inset: 0; display: flex; flex-direction: column; opacity: 0; pointer-events: none; transition: opacity 750ms ease; }
+  .pentimento-panel[data-active=true] { opacity: 1; pointer-events: auto; z-index: 1; }
+  .pentimento-visual { position: relative; width: 100%; flex: 1; min-height: 0; overflow: hidden; }
+  .pentimento-video { display: block; width: 100%; height: 100%; object-fit: contain; background: #1e231c; }
+  .object-canvas { position: absolute; inset: 0; width: 100%; height: 100%; cursor: grab; }
+  .object-canvas:active { cursor: grabbing; }
+  .object-canvas canvas { display: block; max-width: 100%; touch-action: pan-y !important; }
+  .viewer-bottom { display: flex; justify-content: space-between; align-items: center; position: relative; padding: 5px 0; min-height: 50px; flex-shrink: 0; gap: 12px; }
+  .viewer-hint { color: var(--muted); display: flex; flex-direction: column; align-items: start; gap: 3px; font-size: 9px; }
+  .model-gesture-hint { font-size: 8px; color: #a4ab96; }
+  .viewer-controls { display: flex; gap: 5px; }
+  .viewer-controls button { background: transparent; border: 1px solid #57604b; color: #c4cbb7; padding: 10px 14px; min-height: 40px; min-width: 40px; font-size: 10px; }
+  .viewer-controls button:hover:not(:disabled) { border-color: #c4cbb7; }
+  .viewer-controls button:disabled { opacity: .35; }
+  .viewer-controls button > span { margin-left: 13px; }
+  .media-message { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 20px; padding: 24px; text-align: center; color: #bac88c; background: #22271f; }
+  .model-retry { background: transparent; color: inherit; border: 1px solid #57604b; padding: 10px 20px; font: inherit; }
+}
+@layer responsive {
+  @media (max-width: 700px) {
+    .pentimento-experience { height: 521px; min-height: 521px; }
+    .pentimento-switch { width: min(310px, 100%); }
+    .pentimento-switch button { font-size: 9px; }
+    .pentimento-experience .viewer-bottom { min-height: 101px; align-items: start; justify-content: center; flex-direction: column; gap: 12px; }
+    .pentimento-experience .viewer-controls { width: 100%; }
+    .pentimento-experience .viewer-controls button { min-height: 44px; padding: 10px 12px; font-size: 9px; }
+    .pentimento-experience .viewer-controls button:last-child { flex: 1; }
+    .pentimento-experience .viewer-hint { font-size: 8px; }
+    .pentimento-experience .model-gesture-hint { font-size: 7px; }
+  }
+  @media (max-width: 360px) {
+    .pentimento-experience { height: 525px; min-height: 525px; }
+  }
+}

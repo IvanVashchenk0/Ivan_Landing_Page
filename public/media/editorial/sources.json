@@ -1,0 +1,18 @@
+{
+  "engineering-newsletter.pdf": {
+    "source": "Engineering_Newsletter_F'24 Final.pdf",
+    "sha256": "a1b239068faeba9f006362358d325de584a3f01e8c4db89459145f5a846d6bfd"
+  },
+  "acmc-chronicle.pdf": {
+    "source": "ACMC_Chronicle_Digital.pdf",
+    "sha256": "6e3a54cde87e6cd0d69522a78bcdf727df3c819090b9a7a55ff9fac5e2ab867b"
+  },
+  "alumni-video.mp4": {
+    "source": "linkedin-video copy.mp4",
+    "sha256": "0295d745cafd354afaa365c20a0e7e6004252f45b4822221c1ba396962d70065"
+  },
+  "articlePhotos": {
+    "argus-article.webp": "https://files.us-siteglide.com/instances/116/assets/images/news/ai-hackathon-1.jpg",
+    "pentimento-article.webp": "https://files.us-siteglide.com/instances/116/assets/images/news/ACMC-Pentimento.jpeg"
+  }
+}

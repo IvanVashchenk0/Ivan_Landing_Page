@@ -1,0 +1,13 @@
+{
+  "cleanRoot": "/private/tmp/ivan-clean-build-zDGfNu",
+  "originalsPresent": false,
+  "privateConfigurationCopied": false,
+  "dependencyInstall": "Existing node_modules symlink; no new dependency resolution",
+  "build": "passed",
+  "cdn": "https://media.test.invalid",
+  "base": "/portfolio/",
+  "router": "hash",
+  "files": 51,
+  "bytes": 6713654,
+  "forbiddenFiles": 0
+}

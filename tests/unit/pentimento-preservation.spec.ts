@@ -1,0 +1,65 @@
+import { expect, test } from '@playwright/test'
+import { Box3, BufferAttribute, BufferGeometry, Color, Group, Mesh, MeshStandardMaterial, SRGBColorSpace, Texture, Vector3 } from 'three'
+import { prepareCustomGLBShell } from '../../src/projects/pentimento/prepareCustomGLBShell'
+
+test('GLB grouping retains native geometry, transforms, hierarchy, and material references', () => {
+  const geometry = new BufferGeometry()
+  geometry.setAttribute('position', new BufferAttribute(new Float32Array([0, 0, 0, 4, 0, 0, 0, 3, 0]), 3))
+  geometry.setAttribute('uv', new BufferAttribute(new Float32Array([0, 0, 1, 0, 0, 1]), 2))
+  geometry.setAttribute('uv1', new BufferAttribute(new Float32Array([0.2, 0.2, 0.8, 0.2, 0.2, 0.8]), 2))
+  geometry.setAttribute('normal', new BufferAttribute(new Float32Array([0, 0, 1, 0, 0, 1, 0, 0, 1]), 3))
+  geometry.setAttribute('tangent', new BufferAttribute(new Float32Array([1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1]), 4))
+  geometry.setIndex([0, 1, 2])
+  geometry.addGroup(0, 3, 0)
+  const texture = new Texture()
+  texture.offset.set(0.2, 0.4)
+  texture.repeat.set(2, 3)
+  texture.rotation = 0.7
+  texture.colorSpace = SRGBColorSpace
+  texture.updateMatrix()
+  const material = new MeshStandardMaterial({ color: 0x386a92, metalness: 0.72, roughness: 0.31, emissive: new Color(0.2, 0.1, 0.05), emissiveIntensity: 0.6, opacity: 0.45, transparent: true, map: texture })
+  const materials = [material, material.clone()]
+  const indexed = new Mesh(geometry, materials)
+  const nonIndexed = new Mesh(geometry.toNonIndexed(), material)
+  nonIndexed.position.set(8, 2, -4)
+  nonIndexed.rotation.set(0.2, 0.6, 0.1)
+  const nested = new Group()
+  nested.position.set(1, 3, 6)
+  nested.scale.setScalar(1.25)
+  nested.add(indexed, nonIndexed)
+  const imported = new Group()
+  imported.position.set(2, -8, 1)
+  imported.add(nested)
+  const beforeBounds = new Box3().setFromObject(imported)
+  const beforeSize = beforeBounds.getSize(new Vector3())
+  const geometrySnapshot = JSON.stringify([geometry.toJSON(), nonIndexed.geometry.toJSON()])
+  const transforms = [imported, nested, indexed, nonIndexed].map(object => [object.position.toArray(), object.rotation.toArray(), object.scale.toArray()])
+  const materialSnapshot = [material.color.toArray(), material.emissive.toArray(), material.emissiveIntensity, material.metalness, material.roughness, material.opacity, material.transparent, texture.matrix.toArray(), texture.colorSpace]
+
+  const shell = prepareCustomGLBShell(imported)
+  expect(shell.children).toEqual([imported])
+  expect(imported.children).toEqual([nested])
+  expect(nested.children).toEqual([indexed, nonIndexed])
+  expect(indexed.geometry).toBe(geometry)
+  expect(indexed.material).toBe(materials)
+  expect(nonIndexed.material).toBe(material)
+  expect(material.map).toBe(texture)
+  expect(shell.scale.toArray()).toEqual([1, 1, 1])
+  expect(shell.position.toArray()).toEqual(beforeBounds.getCenter(new Vector3()).negate().toArray())
+  expect(shell.userData.nativeBounds).toEqual({ min: beforeBounds.min.toArray(), max: beforeBounds.max.toArray() })
+  expect(JSON.stringify([geometry.toJSON(), nonIndexed.geometry.toJSON()])).toBe(geometrySnapshot)
+  expect([imported, nested, indexed, nonIndexed].map(object => [object.position.toArray(), object.rotation.toArray(), object.scale.toArray()])).toEqual(transforms)
+  expect([material.color.toArray(), material.emissive.toArray(), material.emissiveIntensity, material.metalness, material.roughness, material.opacity, material.transparent, texture.matrix.toArray(), texture.colorSpace]).toEqual(materialSnapshot)
+  const afterBounds = new Box3().setFromObject(shell)
+  expect(afterBounds.getSize(new Vector3()).distanceTo(beforeSize)).toBeLessThan(1e-10)
+  expect(afterBounds.getCenter(new Vector3()).length()).toBeLessThan(1e-10)
+})
+
+test('mesh-free and invalid GLB scenes fail clearly', () => {
+  expect(() => prepareCustomGLBShell(new Group())).toThrow('no viewable mesh geometry')
+  const geometry = new BufferGeometry()
+  geometry.setAttribute('position', new BufferAttribute(new Float32Array([Infinity, 0, 0]), 3))
+  const invalid = new Group()
+  invalid.add(new Mesh(geometry))
+  expect(() => prepareCustomGLBShell(invalid)).toThrow('no viewable mesh geometry')
+})

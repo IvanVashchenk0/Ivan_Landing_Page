@@ -1,0 +1,44 @@
+{
+  "editorial.acmc-chronicle": {
+    "remotePath": "editorial/publications/acmc-chronicle.6e3a54cde87e6cd0d69522a78bcdf727df3c819090b9a7a55ff9fac5e2ab867b.pdf",
+    "mime": "application/pdf",
+    "size": 12554170,
+    "sha256": "6e3a54cde87e6cd0d69522a78bcdf727df3c819090b9a7a55ff9fac5e2ab867b",
+    "cacheControl": "public, max-age=31536000, immutable, no-transform"
+  },
+  "editorial.alumni-video": {
+    "remotePath": "editorial/video/alumni-video.0295d745cafd354afaa365c20a0e7e6004252f45b4822221c1ba396962d70065.mp4",
+    "mime": "video/mp4",
+    "size": 4455883,
+    "sha256": "0295d745cafd354afaa365c20a0e7e6004252f45b4822221c1ba396962d70065",
+    "cacheControl": "public, max-age=31536000, immutable, no-transform"
+  },
+  "editorial.engineering-newsletter": {
+    "remotePath": "editorial/publications/engineering-newsletter.a1b239068faeba9f006362358d325de584a3f01e8c4db89459145f5a846d6bfd.pdf",
+    "mime": "application/pdf",
+    "size": 1255023,
+    "sha256": "a1b239068faeba9f006362358d325de584a3f01e8c4db89459145f5a846d6bfd",
+    "cacheControl": "public, max-age=31536000, immutable, no-transform"
+  },
+  "pentimento.input-video": {
+    "remotePath": "projects/pentimento/sarah_checkin.e1d1738e92a6be745fe4bbc43f9644069ba78ab0829c9507b8b962b895923d94.mp4",
+    "mime": "video/mp4",
+    "size": 129260636,
+    "sha256": "e1d1738e92a6be745fe4bbc43f9644069ba78ab0829c9507b8b962b895923d94",
+    "cacheControl": "public, max-age=31536000, immutable, no-transform"
+  },
+  "pentimento.model": {
+    "remotePath": "projects/pentimento/Textured_mesh_1.45b568bac1c1246dd703e9827742b1d0102c4e0ffdb2535046d80ed1822026c0.glb",
+    "mime": "model/gltf-binary",
+    "size": 233840976,
+    "sha256": "45b568bac1c1246dd703e9827742b1d0102c4e0ffdb2535046d80ed1822026c0",
+    "cacheControl": "public, max-age=31536000, immutable, no-transform"
+  },
+  "pentimento.source-video": {
+    "remotePath": "projects/pentimento/sarah_checkin.70a94bc33da656976e08ca0f26a97b9f678ef745d37e7e409e99f0bd421d0aeb.MOV",
+    "mime": "video/quicktime",
+    "size": 112528163,
+    "sha256": "70a94bc33da656976e08ca0f26a97b9f678ef745d37e7e409e99f0bd421d0aeb",
+    "cacheControl": "public, max-age=31536000, immutable, no-transform"
+  }
+}

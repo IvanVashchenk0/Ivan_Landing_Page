@@ -1,0 +1,742 @@
+{
+  "moves": [
+    {
+      "from": "src/projects/Pentimento/index.tsx",
+      "to": "src/projects/pentimento/index.tsx",
+      "action": "moved"
+    },
+    {
+      "from": "src/projects/Pentimento/ModelViewer.tsx",
+      "to": "src/projects/pentimento/ModelViewer.tsx",
+      "action": "moved"
+    },
+    {
+      "from": "src/projects/Pentimento/ModelLoading.tsx",
+      "to": "src/projects/pentimento/ModelLoading.tsx",
+      "action": "moved"
+    },
+    {
+      "from": "src/projects/Pentimento/viewerCode.ts",
+      "to": "src/projects/pentimento/viewerCode.ts",
+      "action": "moved"
+    },
+    {
+      "from": "src/projects/Pentimento/prepareCustomGLBShell.ts",
+      "to": "src/projects/pentimento/prepareCustomGLBShell.ts",
+      "action": "moved"
+    },
+    {
+      "from": "src/projects/Pentimento/modelLoader.ts",
+      "to": "src/projects/pentimento/modelLoader.ts",
+      "action": "moved"
+    },
+    {
+      "from": "src/projects/Pentimento/loading.css",
+      "to": "src/projects/pentimento/loading.css",
+      "action": "moved"
+    },
+    {
+      "from": "src/projects/Pentimento/InputVideo.tsx",
+      "to": "src/projects/pentimento/InputVideo.tsx",
+      "action": "moved"
+    },
+    {
+      "from": "src/projects/Pentimento/media.ts",
+      "to": "src/projects/pentimento/media.ts",
+      "action": "moved"
+    },
+    {
+      "from": "src/projects/Argus/index.tsx",
+      "to": "src/projects/argus/index.tsx",
+      "action": "moved"
+    },
+    {
+      "from": "src/projects/Argus/WorkingProduct.tsx",
+      "to": "src/projects/argus/WorkingProduct.tsx",
+      "action": "moved"
+    },
+    {
+      "from": "src/projects/Argus/previewTimeline.ts",
+      "to": "src/projects/argus/previewTimeline.ts",
+      "action": "moved"
+    },
+    {
+      "from": "src/projects/Argus/styles.css",
+      "to": "src/projects/argus/styles.css",
+      "action": "moved"
+    },
+    {
+      "from": "src/projects/Argus/usePreviewPlayback.ts",
+      "to": "src/projects/argus/usePreviewPlayback.ts",
+      "action": "moved"
+    },
+    {
+      "from": "src/projects/Argus/Preview.tsx",
+      "to": "src/projects/argus/Preview.tsx",
+      "action": "moved"
+    },
+    {
+      "from": "src/projects/Argus/Scenes.tsx",
+      "to": "src/projects/argus/Scenes.tsx",
+      "action": "moved"
+    },
+    {
+      "from": "src/projects/Argus/preview.css",
+      "to": "src/projects/argus/preview.css",
+      "action": "moved"
+    },
+    {
+      "from": "src/projects/Argus/scenario.ts",
+      "to": "src/projects/argus/scenario.ts",
+      "action": "moved"
+    },
+    {
+      "from": "src/projects/Argus/ProjectContent.tsx",
+      "to": "src/projects/argus/ProjectContent.tsx",
+      "action": "moved"
+    },
+    {
+      "from": "src/projects/Argus/useBanner.ts",
+      "to": "src/projects/argus/useBanner.ts",
+      "action": "moved"
+    },
+    {
+      "from": "src/projects/Argus/timeline.ts",
+      "to": "src/projects/argus/timeline.ts",
+      "action": "moved"
+    },
+    {
+      "from": "src/projects/Argus/useAnimationPlayback.ts",
+      "to": "src/projects/argus/useAnimationPlayback.ts",
+      "action": "moved"
+    },
+    {
+      "from": "src/projects/MonteCarlo/index.tsx",
+      "to": "src/projects/monte-carlo/index.tsx",
+      "action": "moved"
+    },
+    {
+      "from": "src/projects/MonteCarlo/animation.css",
+      "to": "src/projects/monte-carlo/animation.css",
+      "action": "moved"
+    },
+    {
+      "from": "src/projects/MonteCarlo/styles.css",
+      "to": "src/projects/monte-carlo/styles.css",
+      "action": "moved"
+    },
+    {
+      "from": "src/projects/MonteCarlo/statistics.ts",
+      "to": "src/projects/monte-carlo/statistics.ts",
+      "action": "moved"
+    },
+    {
+      "from": "src/projects/MonteCarlo/scenario.ts",
+      "to": "src/projects/monte-carlo/scenario.ts",
+      "action": "moved"
+    },
+    {
+      "from": "src/projects/MonteCarlo/ProjectContent.tsx",
+      "to": "src/projects/monte-carlo/ProjectContent.tsx",
+      "action": "moved"
+    },
+    {
+      "from": "src/projects/MonteCarlo/comparison.ts",
+      "to": "src/projects/monte-carlo/comparison.ts",
+      "action": "moved"
+    },
+    {
+      "from": "src/projects/MonteCarlo/sensitivity.ts",
+      "to": "src/projects/monte-carlo/sensitivity.ts",
+      "action": "moved"
+    },
+    {
+      "from": "src/projects/MonteCarlo/visualization.ts",
+      "to": "src/projects/monte-carlo/visualization.ts",
+      "action": "moved"
+    },
+    {
+      "from": "src/projects/MonteCarlo/DistributionChart.tsx",
+      "to": "src/projects/monte-carlo/DistributionChart.tsx",
+      "action": "moved"
+    },
+    {
+      "from": "src/projects/MonteCarlo/Simulator.tsx",
+      "to": "src/projects/monte-carlo/Simulator.tsx",
+      "action": "moved"
+    },
+    {
+      "from": "src/projects/MonteCarlo/timeline.ts",
+      "to": "src/projects/monte-carlo/timeline.ts",
+      "action": "moved"
+    },
+    {
+      "from": "src/projects/MonteCarlo/AnimationScenes.tsx",
+      "to": "src/projects/monte-carlo/AnimationScenes.tsx",
+      "action": "moved"
+    },
+    {
+      "from": "src/projects/MonteCarlo/AnimationCharts.tsx",
+      "to": "src/projects/monte-carlo/AnimationCharts.tsx",
+      "action": "moved"
+    },
+    {
+      "from": "src/projects/MonteCarlo/useAnimationPlayback.ts",
+      "to": "src/projects/monte-carlo/useAnimationPlayback.ts",
+      "action": "moved"
+    },
+    {
+      "from": "src/projects/MonteCarlo/vehicleData.ts",
+      "to": "src/projects/monte-carlo/vehicleData.ts",
+      "action": "moved"
+    },
+    {
+      "from": "src/projects/MonteCarlo/SensitivityChart.tsx",
+      "to": "src/projects/monte-carlo/SensitivityChart.tsx",
+      "action": "moved"
+    },
+    {
+      "from": "src/projects/MonteCarlo/simulation.ts",
+      "to": "src/projects/monte-carlo/simulation.ts",
+      "action": "moved"
+    },
+    {
+      "from": "src/data/leadership-profile.txt",
+      "to": "src/data/editorial/leadership-profile.txt",
+      "action": "moved"
+    },
+    {
+      "from": "Textured_mesh_1.glb",
+      "to": "media-source/projects/pentimento/Textured_mesh_1.glb",
+      "action": "moved",
+      "sha256Before": "45b568bac1c1246dd703e9827742b1d0102c4e0ffdb2535046d80ed1822026c0",
+      "sha256After": "45b568bac1c1246dd703e9827742b1d0102c4e0ffdb2535046d80ed1822026c0",
+      "bytes": 233840976
+    },
+    {
+      "from": "public/media/pentimento/Textured_mesh_1.glb",
+      "to": "media-source/projects/pentimento/Textured_mesh_1.glb",
+      "action": "consolidated identical copy",
+      "sha256Before": "45b568bac1c1246dd703e9827742b1d0102c4e0ffdb2535046d80ed1822026c0",
+      "sha256After": "45b568bac1c1246dd703e9827742b1d0102c4e0ffdb2535046d80ed1822026c0",
+      "bytes": 233840976
+    },
+    {
+      "from": "sarah_checkin.MOV",
+      "to": "media-source/projects/pentimento/sarah_checkin.MOV",
+      "action": "moved",
+      "sha256Before": "70a94bc33da656976e08ca0f26a97b9f678ef745d37e7e409e99f0bd421d0aeb",
+      "sha256After": "70a94bc33da656976e08ca0f26a97b9f678ef745d37e7e409e99f0bd421d0aeb",
+      "bytes": 112528163
+    },
+    {
+      "from": "public/media/pentimento/sarah_checkin.mp4",
+      "to": "media-source/projects/pentimento/sarah_checkin.mp4",
+      "action": "moved",
+      "sha256Before": "e1d1738e92a6be745fe4bbc43f9644069ba78ab0829c9507b8b962b895923d94",
+      "sha256After": "e1d1738e92a6be745fe4bbc43f9644069ba78ab0829c9507b8b962b895923d94",
+      "bytes": 129260636
+    },
+    {
+      "from": "public/media/ivan/engineering-newsletter.pdf",
+      "to": "media-source/editorial/publications/engineering-newsletter.pdf",
+      "action": "moved",
+      "sha256Before": "a1b239068faeba9f006362358d325de584a3f01e8c4db89459145f5a846d6bfd",
+      "sha256After": "a1b239068faeba9f006362358d325de584a3f01e8c4db89459145f5a846d6bfd",
+      "bytes": 1255023
+    },
+    {
+      "from": "public/media/ivan/acmc-chronicle.pdf",
+      "to": "media-source/editorial/publications/acmc-chronicle.pdf",
+      "action": "moved",
+      "sha256Before": "6e3a54cde87e6cd0d69522a78bcdf727df3c819090b9a7a55ff9fac5e2ab867b",
+      "sha256After": "6e3a54cde87e6cd0d69522a78bcdf727df3c819090b9a7a55ff9fac5e2ab867b",
+      "bytes": 12554170
+    },
+    {
+      "from": "public/media/ivan/alumni-video.mp4",
+      "to": "media-source/editorial/video/alumni-video.mp4",
+      "action": "moved",
+      "sha256Before": "0295d745cafd354afaa365c20a0e7e6004252f45b4822221c1ba396962d70065",
+      "sha256After": "0295d745cafd354afaa365c20a0e7e6004252f45b4822221c1ba396962d70065",
+      "bytes": 4455883
+    },
+    {
+      "from": "public/media/argus/ARGUS Banner.png",
+      "to": "public/media/projects/argus/ARGUS Banner.png",
+      "action": "moved",
+      "sha256Before": "1c2bc30c619e603e7e779e2c7c89fcdaaff52a7711f1f01a26e2d4f7eb9a80eb",
+      "sha256After": "1c2bc30c619e603e7e779e2c7c89fcdaaff52a7711f1f01a26e2d4f7eb9a80eb",
+      "bytes": 476579
+    },
+    {
+      "from": "public/media/ivan/acmc-chronicle/page-1.webp",
+      "to": "public/media/editorial/acmc-chronicle/page-1.webp",
+      "action": "moved",
+      "sha256Before": "9945faa2566f5260d3408b242f7ea757acbb7328fedc4744ee25fb4fafa84d77",
+      "sha256After": "9945faa2566f5260d3408b242f7ea757acbb7328fedc4744ee25fb4fafa84d77",
+      "bytes": 245990
+    },
+    {
+      "from": "public/media/ivan/acmc-chronicle/page-10.webp",
+      "to": "public/media/editorial/acmc-chronicle/page-10.webp",
+      "action": "moved",
+      "sha256Before": "8855618f8fda932197fd7d5f13ec1221de3efdcdc8ad403785c432d6cbda8dcd",
+      "sha256After": "8855618f8fda932197fd7d5f13ec1221de3efdcdc8ad403785c432d6cbda8dcd",
+      "bytes": 342814
+    },
+    {
+      "from": "public/media/ivan/acmc-chronicle/page-11.webp",
+      "to": "public/media/editorial/acmc-chronicle/page-11.webp",
+      "action": "moved",
+      "sha256Before": "d5156bc60163ca7c0f3807e9c4d2644cec7cc8762261218db2ea287e20f6de8a",
+      "sha256After": "d5156bc60163ca7c0f3807e9c4d2644cec7cc8762261218db2ea287e20f6de8a",
+      "bytes": 340248
+    },
+    {
+      "from": "public/media/ivan/acmc-chronicle/page-12.webp",
+      "to": "public/media/editorial/acmc-chronicle/page-12.webp",
+      "action": "moved",
+      "sha256Before": "01c1b9b1b99fd791e19251395bb499a37ca05eea7a8008a6df5d12c61f3502ce",
+      "sha256After": "01c1b9b1b99fd791e19251395bb499a37ca05eea7a8008a6df5d12c61f3502ce",
+      "bytes": 191986
+    },
+    {
+      "from": "public/media/ivan/acmc-chronicle/page-2.webp",
+      "to": "public/media/editorial/acmc-chronicle/page-2.webp",
+      "action": "moved",
+      "sha256Before": "a9b7cb050545eac235b85decbe4c4426d9b1777e5d0e93022c03333bc3d0f341",
+      "sha256After": "a9b7cb050545eac235b85decbe4c4426d9b1777e5d0e93022c03333bc3d0f341",
+      "bytes": 210500
+    },
+    {
+      "from": "public/media/ivan/acmc-chronicle/page-3.webp",
+      "to": "public/media/editorial/acmc-chronicle/page-3.webp",
+      "action": "moved",
+      "sha256Before": "d8e0f8b1e163ba83efdddd1a7593f06bfb6d26256e17ca8125ce4df933662f61",
+      "sha256After": "d8e0f8b1e163ba83efdddd1a7593f06bfb6d26256e17ca8125ce4df933662f61",
+      "bytes": 276556
+    },
+    {
+      "from": "public/media/ivan/acmc-chronicle/page-4.webp",
+      "to": "public/media/editorial/acmc-chronicle/page-4.webp",
+      "action": "moved",
+      "sha256Before": "561b05992ac5e9eb3a06c93e5e04dee6404b5a2303c5dd08c9c3c3404b8b4fe8",
+      "sha256After": "561b05992ac5e9eb3a06c93e5e04dee6404b5a2303c5dd08c9c3c3404b8b4fe8",
+      "bytes": 290654
+    },
+    {
+      "from": "public/media/ivan/acmc-chronicle/page-5.webp",
+      "to": "public/media/editorial/acmc-chronicle/page-5.webp",
+      "action": "moved",
+      "sha256Before": "d0ca3a3e19f15d5560f11bb9e7553938912b78ac0e2264f85a45b701505f6c13",
+      "sha256After": "d0ca3a3e19f15d5560f11bb9e7553938912b78ac0e2264f85a45b701505f6c13",
+      "bytes": 364302
+    },
+    {
+      "from": "public/media/ivan/acmc-chronicle/page-6.webp",
+      "to": "public/media/editorial/acmc-chronicle/page-6.webp",
+      "action": "moved",
+      "sha256Before": "3568ef207a7b0d1620de6599db8140995c23c3f0cc344f93daafb2cf677ffb73",
+      "sha256After": "3568ef207a7b0d1620de6599db8140995c23c3f0cc344f93daafb2cf677ffb73",
+      "bytes": 373416
+    },
+    {
+      "from": "public/media/ivan/acmc-chronicle/page-7.webp",
+      "to": "public/media/editorial/acmc-chronicle/page-7.webp",
+      "action": "moved",
+      "sha256Before": "0b48d7099d51bc38bea624ebf26c3eaaffeeae4d0b132410b7994ebfdcf3703b",
+      "sha256After": "0b48d7099d51bc38bea624ebf26c3eaaffeeae4d0b132410b7994ebfdcf3703b",
+      "bytes": 201456
+    },
+    {
+      "from": "public/media/ivan/acmc-chronicle/page-8.webp",
+      "to": "public/media/editorial/acmc-chronicle/page-8.webp",
+      "action": "moved",
+      "sha256Before": "66e1520955c77ac72d4dfbb242f389113d03cc28f4f0119b58e5a7aef3b9cbb5",
+      "sha256After": "66e1520955c77ac72d4dfbb242f389113d03cc28f4f0119b58e5a7aef3b9cbb5",
+      "bytes": 439100
+    },
+    {
+      "from": "public/media/ivan/acmc-chronicle/page-9.webp",
+      "to": "public/media/editorial/acmc-chronicle/page-9.webp",
+      "action": "moved",
+      "sha256Before": "28f365421d7de78a325f967018b5918d4307da68e927041cd4993ea03f0ec912",
+      "sha256After": "28f365421d7de78a325f967018b5918d4307da68e927041cd4993ea03f0ec912",
+      "bytes": 485036
+    },
+    {
+      "from": "public/media/ivan/acmc-chronicle/text.json",
+      "to": "public/media/editorial/acmc-chronicle/text.json",
+      "action": "moved",
+      "sha256Before": "463132a34abdc28ebf8d7313222d582d707a9d6d9755507a64178b68e7038378",
+      "sha256After": "463132a34abdc28ebf8d7313222d582d707a9d6d9755507a64178b68e7038378",
+      "bytes": 20624
+    },
+    {
+      "from": "public/media/ivan/acmc-chronicle-preview.webp",
+      "to": "public/media/editorial/acmc-chronicle-preview.webp",
+      "action": "moved",
+      "sha256Before": "07019fe4bd6cd5cd0189c2e31a6a456eb6884c5fe0544b5b7ae403456753ae73",
+      "sha256After": "07019fe4bd6cd5cd0189c2e31a6a456eb6884c5fe0544b5b7ae403456753ae73",
+      "bytes": 67536
+    },
+    {
+      "from": "public/media/ivan/acmc-leadership-preview.webp",
+      "to": "public/media/editorial/acmc-leadership-preview.webp",
+      "action": "moved",
+      "sha256Before": "0775c8d4275352e68cd2df9fb8b34e5843cbef62921f9f6fa5710c047400fab0",
+      "sha256After": "0775c8d4275352e68cd2df9fb8b34e5843cbef62921f9f6fa5710c047400fab0",
+      "bytes": 87452
+    },
+    {
+      "from": "public/media/ivan/alumni-video-preview.webp",
+      "to": "public/media/editorial/alumni-video-preview.webp",
+      "action": "moved",
+      "sha256Before": "716bbebdc25b6ace9a9486a5bc85e421e57091fc78a5cf13b9dae347d4368770",
+      "sha256After": "716bbebdc25b6ace9a9486a5bc85e421e57091fc78a5cf13b9dae347d4368770",
+      "bytes": 34002
+    },
+    {
+      "from": "public/media/ivan/argus-article.webp",
+      "to": "public/media/editorial/argus-article.webp",
+      "action": "moved",
+      "sha256Before": "16d72a8cfb9d98cc2c4220f7c4e08ee3f59b8c25c342fa94f71488cba8857bdf",
+      "sha256After": "16d72a8cfb9d98cc2c4220f7c4e08ee3f59b8c25c342fa94f71488cba8857bdf",
+      "bytes": 26480
+    },
+    {
+      "from": "public/media/ivan/engineering-newsletter/page-1.webp",
+      "to": "public/media/editorial/engineering-newsletter/page-1.webp",
+      "action": "moved",
+      "sha256Before": "109365c4f77e1289654f43c8ae6ec3bacef9da5b399825a28707f886f50b31a4",
+      "sha256After": "109365c4f77e1289654f43c8ae6ec3bacef9da5b399825a28707f886f50b31a4",
+      "bytes": 339500
+    },
+    {
+      "from": "public/media/ivan/engineering-newsletter/page-2.webp",
+      "to": "public/media/editorial/engineering-newsletter/page-2.webp",
+      "action": "moved",
+      "sha256Before": "5ec26c96cb365760f642b60840df345c8ce2d1b98ca821be77bfc856faaab828",
+      "sha256After": "5ec26c96cb365760f642b60840df345c8ce2d1b98ca821be77bfc856faaab828",
+      "bytes": 365324
+    },
+    {
+      "from": "public/media/ivan/engineering-newsletter/text.json",
+      "to": "public/media/editorial/engineering-newsletter/text.json",
+      "action": "moved",
+      "sha256Before": "9a56dca7110190c34a9a0b7869bb4dddc2a14fa3931699990d5ec425d2046c0a",
+      "sha256After": "9a56dca7110190c34a9a0b7869bb4dddc2a14fa3931699990d5ec425d2046c0a",
+      "bytes": 3299
+    },
+    {
+      "from": "public/media/ivan/engineering-newsletter-preview.webp",
+      "to": "public/media/editorial/engineering-newsletter-preview.webp",
+      "action": "moved",
+      "sha256Before": "de16ed541a22dc70549e56bca25f0d17c2f1603c261f9e2108239a129ea2d889",
+      "sha256After": "de16ed541a22dc70549e56bca25f0d17c2f1603c261f9e2108239a129ea2d889",
+      "bytes": 99778
+    },
+    {
+      "from": "public/media/ivan/pentimento-article.webp",
+      "to": "public/media/editorial/pentimento-article.webp",
+      "action": "moved",
+      "sha256Before": "b02fd472b244711a2750c176c07bc549a691c7f3d1caa4f86850c09fadfb1cc1",
+      "sha256After": "b02fd472b244711a2750c176c07bc549a691c7f3d1caa4f86850c09fadfb1cc1",
+      "bytes": 235862
+    },
+    {
+      "from": "public/media/ivan/sources.json",
+      "to": "public/media/editorial/sources.json",
+      "action": "moved",
+      "sha256Before": "ce2be92c592d0918aaefe41fa305108016be71012b99a3d4724c3c14214502e3",
+      "sha256After": "ce2be92c592d0918aaefe41fa305108016be71012b99a3d4724c3c14214502e3",
+      "bytes": 741
+    },
+    {
+      "from": "src/styles.css",
+      "to": "src/styles/index.css",
+      "action": "split into ordered styles",
+      "destinations": [
+        "src/styles/index.css",
+        "src/styles/tokens.css",
+        "src/styles/base.css",
+        "src/styles/layout.css",
+        "src/styles/presentation.css",
+        "src/styles/responsive.css",
+        "src/projects/pentimento/styles.css"
+      ]
+    },
+    {
+      "from": "src/components/ProjectPreview.tsx",
+      "to": "src/components/project/ProjectPreview.tsx",
+      "action": "moved"
+    },
+    {
+      "from": "src/components/ProjectExperience.tsx",
+      "to": "src/components/project/ProjectExperience.tsx",
+      "action": "moved"
+    },
+    {
+      "from": "src/components/Arrow.tsx",
+      "to": "src/components/ui/Arrow.tsx",
+      "action": "moved"
+    },
+    {
+      "from": "src/components/ProjectContent.tsx",
+      "to": "src/components/project/ProjectContent.tsx",
+      "action": "moved"
+    },
+    {
+      "from": "src/components/ProjectSection.tsx",
+      "to": "src/components/project/ProjectSection.tsx",
+      "action": "moved"
+    },
+    {
+      "from": "src/components/Footer.tsx",
+      "to": "src/components/layout/Footer.tsx",
+      "action": "moved"
+    },
+    {
+      "from": "src/components/ScrollLink.tsx",
+      "to": "src/components/navigation/ScrollLink.tsx",
+      "action": "moved"
+    },
+    {
+      "from": "src/components/Header.tsx",
+      "to": "src/components/layout/Header.tsx",
+      "action": "moved"
+    },
+    {
+      "from": "src/components/portfolio.css",
+      "to": "src/components/project/portfolio.css",
+      "action": "moved"
+    },
+    {
+      "from": "src/components/Navigation.tsx",
+      "to": "src/components/navigation/Navigation.tsx",
+      "action": "moved"
+    },
+    {
+      "from": "src/components/ProjectNavigation.tsx",
+      "to": "src/components/project/ProjectNavigation.tsx",
+      "action": "moved"
+    },
+    {
+      "from": "src/components/material/material.css",
+      "to": "src/components/editorial/styles.css",
+      "action": "moved"
+    },
+    {
+      "from": "src/components/material/MaterialStrip.tsx",
+      "to": "src/components/editorial/MaterialStrip.tsx",
+      "action": "moved"
+    },
+    {
+      "from": "src/components/material/LocalVideo.tsx",
+      "to": "src/components/media/LocalVideo.tsx",
+      "action": "moved"
+    },
+    {
+      "from": "src/components/material/ClipPreview.tsx",
+      "to": "src/components/media/ClipPreview.tsx",
+      "action": "moved"
+    },
+    {
+      "from": "src/data/projects.ts",
+      "to": "src/data/projects/index.ts",
+      "action": "moved"
+    },
+    {
+      "from": "src/data/navigation.ts",
+      "to": "src/data/navigation/index.ts",
+      "action": "moved"
+    },
+    {
+      "from": "src/data/articles.ts",
+      "to": "src/data/editorial/index.ts",
+      "action": "moved"
+    },
+    {
+      "from": "src/pages/Ivan.tsx",
+      "to": "src/pages/Ivan/index.tsx",
+      "action": "moved"
+    },
+    {
+      "from": "src/pages/IvanReader.tsx",
+      "to": "src/pages/Ivan/Reader.tsx",
+      "action": "moved"
+    },
+    {
+      "from": "scripts/render-ivan-documents.swift",
+      "to": "scripts/media/prepare/render-ivan-documents.swift",
+      "action": "moved"
+    },
+    {
+      "from": "scripts/prepare-ivan-media.py",
+      "to": "scripts/media/prepare/prepare-ivan-media.py",
+      "action": "moved"
+    },
+    {
+      "from": "tests/futures-animation-ui.spec.ts",
+      "to": "tests/e2e/futures-animation-ui.spec.ts",
+      "action": "moved; imports and asset URL expectations updated; original tests retained"
+    },
+    {
+      "from": "tests/futures-animation-math.spec.ts",
+      "to": "tests/unit/futures-animation-math.spec.ts",
+      "action": "moved; imports and asset URL expectations updated; original tests retained"
+    },
+    {
+      "from": "tests/editorial.spec.ts",
+      "to": "tests/e2e/editorial.spec.ts",
+      "action": "moved; imports and asset URL expectations updated; original tests retained"
+    },
+    {
+      "from": "tests/editorial-deployment.spec.ts",
+      "to": "tests/integration/editorial-deployment.spec.ts",
+      "action": "moved; imports and asset URL expectations updated; original tests retained"
+    },
+    {
+      "from": "tests/pentimento-preservation.spec.ts",
+      "to": "tests/unit/pentimento-preservation.spec.ts",
+      "action": "moved; imports and asset URL expectations updated; original tests retained"
+    },
+    {
+      "from": "tests/pentimento-loading.spec.ts",
+      "to": "tests/integration/pentimento-loading.spec.ts",
+      "action": "moved; imports and asset URL expectations updated; original tests retained"
+    },
+    {
+      "from": "tests/argus.spec.ts",
+      "to": "tests/e2e/argus.spec.ts",
+      "action": "moved; imports and asset URL expectations updated; original tests retained"
+    },
+    {
+      "from": "tests/project-media.spec.ts",
+      "to": "tests/e2e/project-media.spec.ts",
+      "action": "moved; imports and asset URL expectations updated; original tests retained"
+    },
+    {
+      "from": "tests/argus-preview.spec.ts",
+      "to": "tests/e2e/argus-preview.spec.ts",
+      "action": "moved; imports and asset URL expectations updated; original tests retained"
+    },
+    {
+      "from": "tests/portfolio.spec.ts",
+      "to": "tests/e2e/portfolio.spec.ts",
+      "action": "moved; imports and asset URL expectations updated; original tests retained"
+    },
+    {
+      "from": "tests/monte-carlo-math.spec.ts",
+      "to": "tests/unit/monte-carlo-math.spec.ts",
+      "action": "moved; imports and asset URL expectations updated; original tests retained"
+    },
+    {
+      "from": "tests/site.spec.ts",
+      "to": "tests/e2e/site.spec.ts",
+      "action": "moved; imports and asset URL expectations updated; original tests retained"
+    },
+    {
+      "from": "tests/monte-carlo-ui.spec.ts",
+      "to": "tests/e2e/monte-carlo-ui.spec.ts",
+      "action": "moved; imports and asset URL expectations updated; original tests retained"
+    }
+  ],
+  "extractions": [
+    {
+      "from": "src/data/projects.ts",
+      "to": [
+        "src/projects/aerodynamics/data.ts",
+        "src/projects/ahu-digitalization/data.ts",
+        "src/projects/argus/data.ts",
+        "src/projects/autonomous-sorting/data.ts",
+        "src/projects/computational-chemistry/data.ts",
+        "src/projects/digitally-manufactured-reactor/data.ts",
+        "src/projects/ecotrail/data.ts",
+        "src/projects/geoarbiter/data.ts",
+        "src/projects/image-recognition/data.ts",
+        "src/projects/monte-carlo/data.ts",
+        "src/projects/peggame-solver/data.ts",
+        "src/projects/pentimento/data.ts",
+        "src/projects/quickscope/data.ts",
+        "src/projects/solar-car-linkage/data.ts",
+        "src/projects/thermal-home-modeling/data.ts",
+        "src/projects/voice-cloning/data.ts",
+        "src/types/project.ts"
+      ],
+      "action": "preserved metadata separated into sixteen modules and common types"
+    },
+    {
+      "from": "src/data/navigation.ts",
+      "to": "src/data/navigation/categories.ts",
+      "action": "category configuration and derived type"
+    },
+    {
+      "from": "README.md",
+      "to": [
+        "docs/projects/argus.md",
+        "docs/projects/pentimento.md",
+        "docs/projects/monte-carlo.md"
+      ],
+      "action": "detailed methodology retained; stale media paths and hosting contract updated"
+    }
+  ],
+  "checks": {
+    "allRecordedBinaryHashesMatch": true,
+    "leadershipTextUnchanged": true,
+    "workingFolderHasGit": false
+  },
+  "byteIdenticalExperienceCodeFiles": [
+    "src/projects/argus/index.tsx",
+    "src/projects/argus/WorkingProduct.tsx",
+    "src/projects/argus/previewTimeline.ts",
+    "src/projects/argus/styles.css",
+    "src/projects/argus/usePreviewPlayback.ts",
+    "src/projects/argus/Preview.tsx",
+    "src/projects/argus/Scenes.tsx",
+    "src/projects/argus/preview.css",
+    "src/projects/argus/scenario.ts",
+    "src/projects/argus/ProjectContent.tsx",
+    "src/projects/argus/timeline.ts",
+    "src/projects/argus/useAnimationPlayback.ts",
+    "src/projects/pentimento/index.tsx",
+    "src/projects/pentimento/ModelViewer.tsx",
+    "src/projects/pentimento/ModelLoading.tsx",
+    "src/projects/pentimento/viewerCode.ts",
+    "src/projects/pentimento/prepareCustomGLBShell.ts",
+    "src/projects/pentimento/modelLoader.ts",
+    "src/projects/pentimento/loading.css",
+    "src/projects/pentimento/InputVideo.tsx",
+    "src/projects/monte-carlo/index.tsx",
+    "src/projects/monte-carlo/animation.css",
+    "src/projects/monte-carlo/styles.css",
+    "src/projects/monte-carlo/statistics.ts",
+    "src/projects/monte-carlo/scenario.ts",
+    "src/projects/monte-carlo/comparison.ts",
+    "src/projects/monte-carlo/sensitivity.ts",
+    "src/projects/monte-carlo/visualization.ts",
+    "src/projects/monte-carlo/DistributionChart.tsx",
+    "src/projects/monte-carlo/timeline.ts",
+    "src/projects/monte-carlo/AnimationScenes.tsx",
+    "src/projects/monte-carlo/AnimationCharts.tsx",
+    "src/projects/monte-carlo/useAnimationPlayback.ts",
+    "src/projects/monte-carlo/vehicleData.ts",
+    "src/projects/monte-carlo/SensitivityChart.tsx",
+    "src/projects/monte-carlo/simulation.ts"
+  ],
+  "verification": {
+    "portableTests": 87,
+    "originalMediaTests": 5,
+    "build": "passed with test CDN URL",
+    "lint": "passed",
+    "mediaVerify": "six original hashes passed",
+    "mediaCheck": "passed; ignores verified in temporary repository",
+    "syncDryRun": "passed offline",
+    "syncRemoteBehavior": "mocked only",
+    "liveCloudChecks": "deferred; no uploads or cloud changes",
+    "preparation": "passed with temporary output; committed derivatives preserved",
+    "cleanBuild": "passed without media-source; see clean-build-verification.json",
+    "screenshots": "desktop, tablet and mobile reviewed; see visual-comparison.json"
+  }
+}
