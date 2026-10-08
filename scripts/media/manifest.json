@@ -25,6 +25,62 @@
       "sha256": "a1b239068faeba9f006362358d325de584a3f01e8c4db89459145f5a846d6bfd",
       "cacheControl": "public, max-age=31536000, immutable, no-transform"
     },
+    "image-recognition.blur-source": {
+      "sourcePath": "projects/image-recognition/blur.png",
+      "remotePath": "projects/image-recognition/blur.b3e9bcd04b9d43153c13c96161df13d12ff6ed0d9ef958c872cb7608136ba507.png",
+      "mime": "image/png",
+      "size": 2151903,
+      "sha256": "b3e9bcd04b9d43153c13c96161df13d12ff6ed0d9ef958c872cb7608136ba507",
+      "cacheControl": "public, max-age=31536000, immutable, no-transform"
+    },
+    "image-recognition.concurrent-processing": {
+      "sourcePath": "projects/image-recognition/over-write-web.mp4",
+      "remotePath": "projects/image-recognition/over-write-web.85be18919dfc2feebd490d71c5c3887519ff91fcabe0fdda3056d16235bdae5f.mp4",
+      "mime": "video/mp4",
+      "size": 12689298,
+      "sha256": "85be18919dfc2feebd490d71c5c3887519ff91fcabe0fdda3056d16235bdae5f",
+      "cacheControl": "public, max-age=31536000, immutable, no-transform"
+    },
+    "image-recognition.concurrent-processing-source": {
+      "sourcePath": "projects/image-recognition/over-write.mov",
+      "remotePath": "projects/image-recognition/over-write.23f4c78fbb137e6f76b6dc3d0e99504f818e6fcddebca9713b52c5c3b1f60d5c.mov",
+      "mime": "video/quicktime",
+      "size": 12689609,
+      "sha256": "23f4c78fbb137e6f76b6dc3d0e99504f818e6fcddebca9713b52c5c3b1f60d5c",
+      "cacheControl": "public, max-age=31536000, immutable, no-transform"
+    },
+    "image-recognition.full-pipeline": {
+      "sourcePath": "projects/image-recognition/full-pipeline-web.mp4",
+      "remotePath": "projects/image-recognition/full-pipeline-web.ae555061ca598e4468c33a344fb168f3d6dd4f54e22d1418b741e46b5bb09d0a.mp4",
+      "mime": "video/mp4",
+      "size": 14083560,
+      "sha256": "ae555061ca598e4468c33a344fb168f3d6dd4f54e22d1418b741e46b5bb09d0a",
+      "cacheControl": "public, max-age=31536000, immutable, no-transform"
+    },
+    "image-recognition.full-pipeline-source": {
+      "sourcePath": "projects/image-recognition/full-pipeline.mov",
+      "remotePath": "projects/image-recognition/full-pipeline.f8bf1601f8fcbb14d3d45db04e224c0802d8d3d996176f4a21d33b1a93f5cdac.mov",
+      "mime": "video/quicktime",
+      "size": 21651435,
+      "sha256": "f8bf1601f8fcbb14d3d45db04e224c0802d8d3d996176f4a21d33b1a93f5cdac",
+      "cacheControl": "public, max-age=31536000, immutable, no-transform"
+    },
+    "image-recognition.similarity": {
+      "sourcePath": "projects/image-recognition/similarity-web.mp4",
+      "remotePath": "projects/image-recognition/similarity-web.c1e50045d745dcdec2cf87b3374ea2fb8e159396b22ffd28cb4c07d11800e47d.mp4",
+      "mime": "video/mp4",
+      "size": 27850656,
+      "sha256": "c1e50045d745dcdec2cf87b3374ea2fb8e159396b22ffd28cb4c07d11800e47d",
+      "cacheControl": "public, max-age=31536000, immutable, no-transform"
+    },
+    "image-recognition.similarity-source": {
+      "sourcePath": "projects/image-recognition/similarity.mov",
+      "remotePath": "projects/image-recognition/similarity.456c510afdaf879e9b3e68d41d4c630b068f6dfb9e12c33ef6353ddd51d9edcd.mov",
+      "mime": "video/quicktime",
+      "size": 65467729,
+      "sha256": "456c510afdaf879e9b3e68d41d4c630b068f6dfb9e12c33ef6353ddd51d9edcd",
+      "cacheControl": "public, max-age=31536000, immutable, no-transform"
+    },
     "pentimento.input-video": {
       "sourcePath": "projects/pentimento/sarah_checkin.mp4",
       "remotePath": "projects/pentimento/sarah_checkin.e1d1738e92a6be745fe4bbc43f9644069ba78ab0829c9507b8b962b895923d94.mp4",

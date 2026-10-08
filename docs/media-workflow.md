@@ -11,6 +11,13 @@ Heavy originals live in ignored `media-source/`. Back them up separately; a futu
 | editorial.engineering-newsletter | editorial/publications/engineering-newsletter.pdf |
 | editorial.acmc-chronicle | editorial/publications/acmc-chronicle.pdf |
 | editorial.alumni-video | editorial/video/alumni-video.mp4 |
+| image-recognition.full-pipeline-source | projects/image-recognition/full-pipeline.mov |
+| image-recognition.full-pipeline | projects/image-recognition/full-pipeline-web.mp4 |
+| image-recognition.similarity-source | projects/image-recognition/similarity.mov |
+| image-recognition.similarity | projects/image-recognition/similarity-web.mp4 |
+| image-recognition.concurrent-processing-source | projects/image-recognition/over-write.mov |
+| image-recognition.concurrent-processing | projects/image-recognition/over-write-web.mp4 |
+| image-recognition.blur-source | projects/image-recognition/blur.png |
 
 Full sizes and SHA-256 values are committed in `scripts/media/manifest.json` and the [migration inventory](migration.json). `sourcePath` is relative to repository `media-source/`; `remotePath` preserves its hierarchy and adds the entire SHA-256 before the extension. URLs change when content changes, while logical IDs remain stable. This also separates Pentimento cache entries correctly without rewriting its loader.
 
@@ -48,5 +55,7 @@ R2 uses its S3 API endpoint for upload; the public custom domain is the separate
 ## Derivative preparation
 
 `npm run media:prepare` verifies originals, runs the existing Swift PDFKit/AVFoundation page/text/poster preparation and Python 3.11+ Pillow image conversion, then verifies originals again. This is an optional macOS authoring task. Source photographs are fetched from the existing verified URLs into the temporary cache if absent.
+
+`npm run media:prepare-image-recognition` creates the three H.264 fast-start MP4s, real poster frames, a lossless WebP diagram, and eight faithful mobile crops from the four Image Recognition originals. It uses explicit repository paths, checks the source hashes before and after preparation, and accepts `--source`, `--output`, and `--temporary` overrides. Run `npm run media:manifest -- --update-existing` only after intentionally regenerating and reviewing derivative video bytes.
 
 Override locations using `--source PATH --temporary PATH --output PATH`; defaults are `media-source`, `.cache/media`, and `public/media/editorial`. The Swift and Python programs accept explicit paths and do not reference Downloads or a fixed system temporary directory. They never copy PDF/video/GLB originals back into public. Pentimento's existing browser MP4 and full GLB are preserved, not regenerated.

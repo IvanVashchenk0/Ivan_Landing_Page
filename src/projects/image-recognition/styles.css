@@ -1,0 +1,54 @@
+@layer components {
+  .image-recognition-preview { width:100%; max-width:1100px; margin:auto; }
+  .image-recognition-preview-label { margin-bottom:12px; color:var(--muted); font-size:9px; letter-spacing:.08em; }
+  .image-recognition-video-frame { position:relative; width:100%; background:#edf1f2; border:1px solid var(--line); overflow:hidden; }
+  .image-recognition-video-frame video { display:block; width:100%; aspect-ratio:2940/1170; object-fit:contain; background:#edf1f2; }
+  .image-recognition-poster-action { position:absolute; inset:0; width:100%; border:0; background:#f4f6f31a; color:var(--ink); font-size:10px; letter-spacing:.08em; opacity:0; transition:opacity 180ms ease,background-color 180ms ease; }
+  .image-recognition-video-frame:hover .image-recognition-poster-action,.image-recognition-poster-action:focus-visible { opacity:1; background:#f4f6f3c9; }
+  .image-recognition-video-controls { min-height:42px; display:flex; align-items:center; gap:8px; padding:6px; border-top:1px solid var(--line); background:var(--paper); }
+  .image-recognition-video-controls button,.image-recognition-video-error button { min-height:30px; padding:6px 10px; border:1px solid var(--line); background:transparent; color:inherit; font:inherit; }
+  .image-recognition-video-controls span { margin-left:auto; padding-right:7px; color:var(--muted); font-size:8px; }
+  .image-recognition-video-error { position:absolute; inset:auto 8px 50px 8px; padding:10px; background:var(--paper); border:1px solid var(--line); font-size:9px; }
+  .image-recognition-video-error button { margin-left:10px; }
+  .image-recognition-case-study { padding:0 var(--page-gutter) 70px; }
+  .image-recognition-exhibit { border-top:1px solid var(--line); padding:58px 0 74px; }
+  .image-recognition-exhibit>header { display:grid; grid-template-columns:74px minmax(0,1fr) minmax(280px,520px); gap:22px; align-items:start; margin-bottom:38px; }
+  .image-recognition-exhibit>header>.mono { padding-top:8px; color:var(--muted); font-size:10px; }
+  .image-recognition-exhibit h2 { font-size:clamp(30px,4vw,58px); font-weight:440; letter-spacing:-.055em; line-height:.95; }
+  .image-recognition-exhibit>header p { font-size:13px; line-height:1.75; color:var(--muted); max-width:520px; }
+  .image-recognition-exhibit>.image-recognition-video-frame { max-width:1200px; margin-inline:auto; }
+  .image-recognition-exhibit>.image-recognition-video-frame video { aspect-ratio:2940/1166; }
+  .image-recognition-exhibit:nth-child(3)>.image-recognition-video-frame video { aspect-ratio:1588/894; }
+  .blur-diagram { max-width:1400px; margin:0 auto; }
+  .blur-diagram>img { display:block; width:100%; height:auto; }
+  .blur-diagram figcaption { display:flex; justify-content:flex-end; padding-top:16px; }
+  .blur-diagram figcaption button { border:0; background:transparent; }
+  .blur-diagram-dialog { width:min(96vw,1700px); max-width:none; max-height:94vh; padding:44px 12px 12px; border:1px solid var(--line); background:#fff; }
+  .blur-diagram-dialog::backdrop { background:#20241fe8; }
+  .blur-diagram-dialog>button { position:absolute; top:8px; right:12px; min-height:32px; padding:4px 10px; border:1px solid var(--line); background:#fff; }
+  .blur-diagram-dialog img { display:block; width:100%; height:auto; }
+}
+
+@layer responsive {
+  @media(max-width:700px) {
+    .image-recognition-preview-label { font-size:8px; line-height:1.5; }
+    .image-recognition-video-frame video { aspect-ratio:2940/1170; }
+    .image-recognition-poster-action { opacity:1; top:auto; height:44px; background:#f4f6f3e8; }
+    .image-recognition-video-controls { min-height:48px; }
+    .image-recognition-video-controls button { min-height:38px; }
+    .image-recognition-case-study { padding-bottom:42px; }
+    .image-recognition-exhibit { padding:38px 0 48px; }
+    .image-recognition-exhibit>header { display:block; margin-bottom:24px; }
+    .image-recognition-exhibit>header>.mono { display:block; padding:0 0 12px; font-size:8px; }
+    .image-recognition-exhibit h2 { font-size:clamp(32px,10vw,46px); margin-bottom:18px; }
+    .image-recognition-exhibit>header p { font-size:12px; line-height:1.7; }
+    .blur-stage-rail { display:grid; grid-auto-flow:column; grid-auto-columns:88%; align-items:start; gap:12px; overflow-x:auto; overscroll-behavior-inline:contain; scroll-snap-type:x mandatory; scrollbar-width:thin; padding-bottom:14px; }
+    .blur-stage-rail figure { scroll-snap-align:start; border:1px solid var(--line); background:#fff; }
+    .blur-stage-rail img { display:block; width:100%; height:auto; }
+    .blur-stage-rail figcaption { padding:9px 10px; border-top:1px solid var(--line); color:var(--muted); font-size:8px; }
+  }
+}
+
+@media(prefers-reduced-motion:reduce) {
+  .image-recognition-poster-action { transition:none; }
+}

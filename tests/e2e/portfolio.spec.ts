@@ -20,7 +20,7 @@ test('sixteen catalog entries preserve category order, homepage curation, and ho
     }
   }
   const placeholders = projects.filter(project => project.previewType === 'placeholder')
-  expect(placeholders).toHaveLength(13)
+  expect(placeholders).toHaveLength(12)
   for (const project of placeholders) {
     expect(project.details).toEqual([])
     expect(project.sections).toBeUndefined()
@@ -40,7 +40,7 @@ test('category exhibits include a numbered section and explicit Explore Project 
       await expect(section.locator('.section-topline')).toContainText(`/ ${category.toUpperCase()}`)
       await expect(section.getByRole('link', { name: 'EXPLORE PROJECT', exact: true })).toHaveAttribute('href', `/projects/${ids[i]}`)
       await expect(section.locator('h2 a')).toHaveAttribute('href', `/projects/${ids[i]}`)
-      if (!['argus', 'pentimento', 'monte-carlo'].includes(ids[i])) {
+      if (!['argus', 'pentimento', 'image-recognition', 'monte-carlo'].includes(ids[i])) {
         await expect(section.getByText('PREVIEW IN DEVELOPMENT', { exact: true })).toBeVisible()
         expect((await section.locator('.portfolio-placeholder').boundingBox())!.height).toBeGreaterThanOrEqual(410)
         await section.locator('.portfolio-placeholder').click()
@@ -153,7 +153,7 @@ test('substantial placeholders, long titles and project navigation fit desktop a
         expect(overflow).toEqual([])
       }
       expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(width)
-      const example = category === 'ai' ? 'image-recognition' : 'computational-chemistry'
+      const example = category === 'ai' ? 'voice-cloning' : 'computational-chemistry'
       await page.locator(`#${example}`).screenshot({ path: info.outputPath(`${category}-${width}-preview.png`) })
       await page.goto(`/projects/${example}`)
       await expect(page.getByText('PROJECT CASE STUDY IN DEVELOPMENT', { exact: true })).toBeVisible()
