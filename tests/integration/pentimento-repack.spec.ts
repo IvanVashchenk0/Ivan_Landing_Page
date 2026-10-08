@@ -2,10 +2,12 @@ import { test, expect, chromium } from '@playwright/test'
 import { createServer } from 'node:http'
 import { createReadStream } from 'node:fs'
 import { readFile, writeFile, mkdir, stat } from 'node:fs/promises'
-import { verifyRepack } from '../../scripts/media/lib/glb-repack.mjs'
+import { createHash } from 'node:crypto'
+import { jpegDimensions, parseGLB, verifyRepack } from '../../scripts/media/lib/glb-repack.mjs'
 
 const source = 'media-source/projects/pentimento/Textured_mesh_1.glb'
 const derivative = 'media-source/projects/pentimento/Textured_mesh_1_binary-repacked.glb'
+const mobile = 'media-source/projects/pentimento/Textured_mesh_1024_400k.glb'
 const artifacts = '.cache/pentimento-repack'
 
 test('full original and binary derivative are exactly equivalent @real-media', async () => {
@@ -18,6 +20,38 @@ test('full original and binary derivative are exactly equivalent @real-media', a
   expect(report.derivative.bytes).toBeLessThan(182 * 1024 * 1024)
   await mkdir(artifacts, { recursive: true })
   await writeFile(`${artifacts}/byte-verification.json`, JSON.stringify(report,null,2)+'\n')
+})
+
+test('mobile derivative has the recorded geometry, hierarchy, materials, and 1024px textures @real-media', async () => {
+  const bytes = await readFile(mobile)
+  expect(bytes).toHaveLength(30_697_560)
+  expect(createHash('sha256').update(bytes).digest('hex')).toBe('c3d000c498548b37e4e88cf81c0906da4321253e738dda57ffdd5cd0c08eaaed')
+  const parsed = parseGLB(bytes)
+  const json = parsed.json
+  const primitives = json.meshes.flatMap((mesh: { primitives: { attributes: { POSITION: number; TEXCOORD_0: number }; indices: number; material: number; mode?: number }[] }) => mesh.primitives)
+  expect({ scenes: json.scenes.length, nodes: json.nodes.length, meshes: json.meshes.length, primitives: primitives.length, materials: json.materials.length, textures: json.textures.length, images: json.images.length }).toEqual({ scenes: 1, nodes: 1, meshes: 1, primitives: 2, materials: 2, textures: 2, images: 2 })
+  expect(json.extensionsUsed).toEqual(['KHR_materials_unlit'])
+  expect(json.extensionsRequired).toEqual(['KHR_materials_unlit'])
+  expect(json.scenes).toEqual([{ nodes: [0] }])
+  expect(json.nodes).toEqual([{ mesh: 0 }])
+  expect(json.accessors[0]).toMatchObject({ componentType: 5126, count: 755621, type: 'VEC3' })
+  expect(json.accessors[1]).toMatchObject({ componentType: 5126, count: 755621, type: 'VEC2' })
+  expect(primitives.reduce((total: number, primitive: { indices: number }) => total + json.accessors[primitive.indices].count / 3, 0)).toBe(809979)
+  expect(primitives.every((primitive: { mode?: number }) => (primitive.mode ?? 4) === 4)).toBe(true)
+  expect(primitives.every((primitive: { indices: number }) => json.accessors[primitive.indices].componentType === 5125)).toBe(true)
+  expect(json.materials).toEqual([
+    expect.objectContaining({ alphaMode: 'OPAQUE', emissiveFactor: [1, 1, 1], pbrMetallicRoughness: expect.objectContaining({ metallicFactor: 0, roughnessFactor: 1 }) }),
+    expect.objectContaining({ alphaMode: 'OPAQUE', emissiveFactor: [1, 1, 1], pbrMetallicRoughness: expect.objectContaining({ metallicFactor: 0, roughnessFactor: 1 }) }),
+  ])
+  const imageReports = json.images.map((image: { bufferView: number; mimeType: string }) => {
+    const view = json.bufferViews[image.bufferView]
+    const imageBytes = parsed.buffers[view.buffer].subarray(view.byteOffset ?? 0, (view.byteOffset ?? 0) + view.byteLength)
+    return { mimeType: image.mimeType, bytes: imageBytes.length, hash: createHash('sha256').update(imageBytes).digest('hex'), ...jpegDimensions(imageBytes) }
+  })
+  expect(imageReports).toEqual([
+    { mimeType: 'image/jpeg', bytes: 246059, hash: 'a74e1310c0ff4ac341c7028b2b8fe8f127e4c5143a4d3a903d08409913fa9a90', width: 1024, height: 1024 },
+    { mimeType: 'image/jpeg', bytes: 210069, hash: '2453ac552bd91345d07ae991a97611fc2ae2f79f472f9b3df9dba681d624f1cb', width: 1024, height: 1024 },
+  ])
 })
 
 test('four-view render equality and alternating fresh-browser benchmarks @real-media', async () => {

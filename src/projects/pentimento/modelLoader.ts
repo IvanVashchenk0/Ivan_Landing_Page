@@ -1,5 +1,5 @@
-import { PENTIMENTO_GLB } from './media'
-import { canUseInteractivePentimentoModel } from './capabilities'
+import { PENTIMENTO_DESKTOP_GLB, PENTIMENTO_MOBILE_GLB } from './media'
+import { pentimentoModelVariant, type PentimentoModelVariant } from './capabilities'
 
 // Bump this version whenever the source GLB changes. The original URL stays compatible.
 export const MODEL_CACHE = 'pentimento-assets-v1'
@@ -24,10 +24,10 @@ function validate(buffer: ArrayBuffer) {
 }
 
 export function createModelLoader(dependencies: Dependencies = {}) {
-  const url = dependencies.url ?? PENTIMENTO_GLB
+  const url = dependencies.url ?? PENTIMENTO_DESKTOP_GLB
   const fetchModel = dependencies.fetch ?? ((...args) => fetch(...args))
   const openCache = dependencies.openCache ?? (async () => typeof caches === 'undefined' ? undefined : caches.open(MODEL_CACHE))
-  const allowRequest = dependencies.allowRequest ?? canUseInteractivePentimentoModel
+  const allowRequest = dependencies.allowRequest ?? (() => true)
   let snapshot = initial
   let bytes: ArrayBuffer | undefined
   let flight: Promise<ArrayBuffer> | undefined
@@ -38,7 +38,7 @@ export function createModelLoader(dependencies: Dependencies = {}) {
   const publish = (next: DownloadSnapshot) => { snapshot = next; listeners.forEach(listener => listener()) }
 
   const request = (priority: 'auto' | 'high' | 'low' = 'auto'): Promise<ArrayBuffer> => {
-    if (!allowRequest()) return Promise.reject(new Error('The full-resolution Pentimento model is desktop-only.'))
+    if (!allowRequest()) return Promise.reject(new Error('Pentimento model selection does not match this device.'))
     if (bytes) return Promise.resolve(bytes)
     if (flight) {
       // A rapid route remount may arrive while the previous abort is still settling.
@@ -149,7 +149,17 @@ export function createModelLoader(dependencies: Dependencies = {}) {
     },
   }
 }
-export const pentimentoModelLoader = createModelLoader()
+export const pentimentoDesktopModelLoader = createModelLoader({
+  url: PENTIMENTO_DESKTOP_GLB,
+  allowRequest: () => pentimentoModelVariant() === 'desktop',
+})
+export const pentimentoMobileModelLoader = createModelLoader({
+  url: PENTIMENTO_MOBILE_GLB,
+  allowRequest: () => pentimentoModelVariant() === 'mobile',
+})
+export const getPentimentoModelLoader = (variant: PentimentoModelVariant) => variant === 'mobile' ? pentimentoMobileModelLoader : pentimentoDesktopModelLoader
+// Compatibility alias for existing desktop loading tests.
+export const pentimentoModelLoader = pentimentoDesktopModelLoader
 
 export function canPrefetchModel() {
   const connection = (navigator as Navigator & { connection?: { saveData?: boolean; effectiveType?: string; downlink?: number; rtt?: number } }).connection

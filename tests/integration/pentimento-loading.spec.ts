@@ -15,7 +15,7 @@ function triangleGLB() {
   return bytes
 }
 const fixture = [...triangleGLB()]
-type Harness = { calls: number; aborts: number; push: (fraction: number) => void; finish: () => void; fail: () => void }
+type Harness = { calls: number; aborts: number; urls: string[]; push: (fraction: number) => void; finish: () => void; fail: () => void }
 declare global { interface Window { modelHarness: Harness; modelPhases: string[] } }
 
 async function controlled(page: Page, options: { saveData?: boolean; effectiveType?: string; length?: boolean; cacheFailure?: boolean } = {}) {
@@ -24,14 +24,15 @@ async function controlled(page: Page, options: { saveData?: boolean; effectiveTy
     if (options.cacheFailure) Object.defineProperty(window, 'caches', { configurable: true, value: { open: async () => { throw new Error('Storage unavailable') } } })
     const original = window.fetch.bind(window)
     let stream: ReadableStreamDefaultController<Uint8Array>, offset = 0
-    const harness: Harness = { calls: 0, aborts: 0,
+    const harness: Harness = { calls: 0, aborts: 0, urls: [],
       push: fraction => { const end = Math.floor(bytes.length * fraction); stream.enqueue(new Uint8Array(bytes.slice(offset, end))); offset = end },
       finish: () => { harness.push(1); stream.close() }, fail: () => stream.error(new Error('Network interrupted')),
     }
     window.modelHarness = harness
     window.fetch = (input, init) => {
-      if (!String(input).includes('Textured_mesh_1_binary-repacked.')) return original(input, init)
-      harness.calls++; offset = 0
+      const url = String(input)
+      if (!url.includes('Textured_mesh_1_binary-repacked.') && !url.includes('Textured_mesh_1024_400k.')) return original(input, init)
+      harness.calls++; harness.urls.push(url); offset = 0
       init?.signal?.addEventListener('abort', () => { harness.aborts++; stream.error(new DOMException('Aborted', 'AbortError')) })
       return Promise.resolve(new Response(new ReadableStream({ start(controller) { stream = controller } }), { headers: options.length === false ? {} : { 'content-length': String(bytes.length) } }))
     }
@@ -61,7 +62,7 @@ for (const profile of [
   { name: 'mobile Safari-like', userAgent: 'Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X) AppleWebKit/605.1.15 Version/18.0 Mobile/15E148 Safari/604.1', platform: 'iPhone', maxTouchPoints: 5, mobileHint: true },
   { name: 'Android-like', userAgent: 'Mozilla/5.0 (Linux; Android 15; Pixel 9) AppleWebKit/537.36 Chrome/140.0 Mobile Safari/537.36', platform: 'Linux armv8l', maxTouchPoints: 5, mobileHint: true },
 ]) {
-  test(`${profile.name} blocks viewport and intent loading before viewer import`, async ({ page }) => {
+  test(`${profile.name} loads only the mobile model after explicit selection`, async ({ page }) => {
     await installMobileProfile(page, profile)
     await controlled(page)
     const requests: string[] = []
@@ -73,19 +74,39 @@ for (const profile of [
     await tab.focus()
     await tab.dispatchEvent('pointerenter', { pointerType: 'touch' })
     await tab.dispatchEvent('pointerdown', { pointerType: 'touch' })
-    await tab.click()
-    await expect(page.getByText('FULL-RESOLUTION INTERACTIVE RECONSTRUCTION AVAILABLE ON DESKTOP')).toBeVisible()
-    await expect(page.locator('.pentimento-model-still')).toBeVisible()
-    await expect(viewer(page)).toHaveCount(0)
     expect(await calls(page)).toBe(0)
-    expect(requests.filter(url => url.includes('.glb'))).toEqual([])
     expect(requests.filter(url => url.includes('ModelViewer'))).toEqual([])
+    await tab.click()
+    await expect(page.locator('.pentimento-model-still')).toBeVisible()
+    await expect.poll(() => calls(page)).toBe(1)
+    expect(await page.evaluate(() => window.modelHarness.urls)).toHaveLength(1)
+    expect((await page.evaluate(() => window.modelHarness.urls))[0]).toContain('Textured_mesh_1024_400k.')
+    expect((await page.evaluate(() => window.modelHarness.urls))[0]).not.toContain('Textured_mesh_1_binary-repacked.')
+    await page.evaluate(() => window.modelHarness.push(.5))
+    await expect(page.getByText('50%', { exact: true })).toBeVisible()
+    await expect(page.locator('.pentimento-model-still')).toHaveAttribute('data-ready', 'false')
+    await page.evaluate(() => window.modelHarness.finish())
+    await expect(viewer(page)).toHaveAttribute('data-model-state', 'ready')
+    await expect(viewer(page)).toHaveAttribute('data-model-variant', 'mobile')
+    expect(Number(await viewer(page).getAttribute('data-pixel-ratio'))).toBeLessThanOrEqual(1.25)
+    await expect(page.locator('.pentimento-model-still')).toHaveAttribute('data-ready', 'true')
+    const canvas = await viewer(page).locator('canvas').elementHandle()
     await page.getByRole('tab', { name: 'INPUT VIDEO' }).click()
     await expect(page.locator('.pentimento-video')).toBeVisible()
     await expect(page.getByRole('button', { name: /input video/ })).toBeVisible()
     await tab.click()
-    await expect(page.locator('.pentimento-model-still')).toBeVisible()
-    expect(await calls(page)).toBe(0)
+    expect(await canvas!.evaluate(node => node.isConnected)).toBe(true)
+    expect(await calls(page)).toBe(1)
+    expect(requests.filter(url => url.includes('Textured_mesh_1_binary-repacked.'))).toEqual([])
+    await canvas!.evaluate(node => node.dispatchEvent(new Event('webglcontextlost', { cancelable: true })))
+    await expect(viewer(page)).toHaveAttribute('data-model-state', 'webgl')
+    await expect(page.locator('.pentimento-model-still')).toHaveAttribute('data-ready', 'false')
+    await canvas!.evaluate(node => node.dispatchEvent(new Event('webglcontextrestored')))
+    await expect(viewer(page)).toHaveAttribute('data-model-state', 'ready')
+    await page.getByRole('navigation', { name: 'Primary' }).getByRole('link', { name: 'ME', exact: true }).click()
+    await expect(page).toHaveURL(/\/me$/)
+    await expect(viewer(page)).toHaveCount(0)
+    expect(await canvas!.evaluate(node => node.isConnected)).toBe(false)
   })
 }
 
@@ -103,7 +124,7 @@ test('loader safety rejection occurs before cache access or network fetch', asyn
     const error = await loader.request().then(() => '', reason => String(reason))
     return { cacheOpens, fetches, phase: loader.getSnapshot().phase, error }
   })
-  expect(result).toEqual({ cacheOpens: 0, fetches: 0, phase: 'idle', error: 'Error: The full-resolution Pentimento model is desktop-only.' })
+  expect(result).toEqual({ cacheOpens: 0, fetches: 0, phase: 'idle', error: 'Error: Pentimento model selection does not match this device.' })
 })
 
 test('approach warms viewer code; meaningful visibility fetches bytes without mounting a viewer', async ({ page }) => {
@@ -118,6 +139,8 @@ test('approach warms viewer code; meaningful visibility fetches bytes without mo
   expect(await calls(page)).toBe(0)
   await page.locator('#pentimento').scrollIntoViewIfNeeded()
   await expect.poll(() => calls(page)).toBe(1)
+  expect((await page.evaluate(() => window.modelHarness.urls))[0]).toContain('Textured_mesh_1_binary-repacked.')
+  expect((await page.evaluate(() => window.modelHarness.urls))[0]).not.toContain('Textured_mesh_1024_400k.')
   await expect(viewer(page)).toHaveCount(0)
   await page.evaluate(() => window.modelHarness.finish())
   await expect(viewer(page)).toHaveCount(0)

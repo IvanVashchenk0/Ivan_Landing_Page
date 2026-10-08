@@ -5,6 +5,7 @@ Heavy originals live in ignored `media-source/`. Back them up separately; a futu
 | Logical ID | Canonical path relative to media-source |
 |---|---|
 | pentimento.model | projects/pentimento/Textured_mesh_1.glb |
+| pentimento.model-mobile | projects/pentimento/Textured_mesh_1024_400k.glb |
 | pentimento.source-video | projects/pentimento/sarah_checkin.MOV |
 | pentimento.input-video | projects/pentimento/sarah_checkin.mp4 |
 | editorial.engineering-newsletter | editorial/publications/engineering-newsletter.pdf |

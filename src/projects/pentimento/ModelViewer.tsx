@@ -2,12 +2,12 @@ import { useEffect, useRef, useState } from 'react'
 import * as THREE from 'three'
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js'
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js'
-import { PENTIMENTO_GLB } from './media'
+import { PENTIMENTO_DESKTOP_GLB, PENTIMENTO_MOBILE_GLB } from './media'
 import { prepareCustomGLBShell } from './prepareCustomGLBShell'
-import { pentimentoModelLoader } from './modelLoader'
+import { getPentimentoModelLoader } from './modelLoader'
 import { ModelLoading } from './ModelLoading'
 import { ModelPoster } from './ModelPoster'
-import { canUseInteractivePentimentoModel, fullModelCapability } from './capabilities'
+import { fullModelCapability, type PentimentoModelVariant } from './capabilities'
 
 type LoadState = 'loading' | 'preparing' | 'ready' | 'error' | 'webgl' | 'unsupported'
 interface ViewerControls { reset: () => void; orbit: (horizontal: number, vertical?: number) => void; zoom: (direction: number) => void }
@@ -37,7 +37,7 @@ function disposeObject(root: THREE.Object3D) {
   bitmaps.forEach(bitmap => bitmap.close())
 }
 
-export default function ModelViewer({ active }: { active: boolean }) {
+export default function ModelViewer({ active, variant }: { active: boolean; variant: PentimentoModelVariant }) {
   const host = useRef<HTMLDivElement>(null)
   const actions = useRef<ViewerControls | null>(null)
   const setActive = useRef<((value: boolean) => void) | null>(null)
@@ -48,25 +48,30 @@ export default function ModelViewer({ active }: { active: boolean }) {
   useEffect(() => {
     const element = host.current
     if (!element) return
-    // Defense in depth. Mobile entry points never import this module, but a
-    // future caller must still be stopped before WebGL or model loading.
-    if (!canUseInteractivePentimentoModel()) return
-    const capability = fullModelCapability()
-    // Synchronize the UI with the actual device capability probe.
-    // oxlint-disable-next-line react/set-state-in-effect
-    if (capability !== 'supported') { setState(capability === 'webgl' ? 'webgl' : 'unsupported'); return }
+    const mobile = variant === 'mobile'
+    const modelURL = mobile ? PENTIMENTO_MOBILE_GLB : PENTIMENTO_DESKTOP_GLB
+    const modelLoader = getPentimentoModelLoader(variant)
+    // Preserve the existing desktop preflight. Mobile creates only the renderer
+    // it will use, after explicit FINAL MODEL selection.
+    if (!mobile) {
+      const capability = fullModelCapability()
+      // oxlint-disable-next-line react/set-state-in-effect
+      if (capability !== 'supported') { setState(capability === 'webgl' ? 'webgl' : 'unsupported'); return }
+    }
     let renderer: THREE.WebGLRenderer
-    try { renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true }) }
+    try { renderer = new THREE.WebGLRenderer({ antialias: !mobile, alpha: true }) }
     catch {
       // Synchronize the UI with the browser's renderer initialization failure.
       // oxlint-disable-next-line react/set-state-in-effect
       setState('webgl')
       return
     }
-    if (renderer.capabilities.maxTextureSize < 8192) {
+    if (renderer.capabilities.maxTextureSize < (mobile ? 1024 : 8192)) {
       renderer.dispose(); renderer.forceContextLoss(); setState('unsupported'); return
     }
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, window.innerWidth < 700 ? 1.5 : 2))
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, mobile ? 1.25 : window.innerWidth < 700 ? 1.5 : 2))
+    element.dataset.pixelRatio = String(renderer.getPixelRatio())
+    renderer.shadowMap.enabled = false
     renderer.setClearColor(0x000000, 0)
     renderer.outputColorSpace = THREE.SRGBColorSpace
     // Keep the scan's authored emissive textures free of tone-map/exposure changes.
@@ -85,8 +90,9 @@ export default function ModelViewer({ active }: { active: boolean }) {
     controls.maxPolarAngle = Math.PI - 0.08
     controls.touches.ONE = THREE.TOUCH.ROTATE
     controls.touches.TWO = THREE.TOUCH.DOLLY_ROTATE
-    // Horizontal touch orbit + two-finger pinch; vertical swipes can still scroll the page.
-    renderer.domElement.style.touchAction = 'pan-y'
+    // Mobile dedicates the canvas gesture to one-finger orbit and pinch zoom.
+    // The surrounding exhibit remains available for normal page scrolling.
+    renderer.domElement.style.touchAction = mobile ? 'none' : 'pan-y'
     // The supplied materials already carry captured lighting in emissive maps.
     // Subdued scene lights avoid washing them out; the materials stay untouched.
     scene.add(new THREE.HemisphereLight(0xffffff, 0x62695a, 0.15))
@@ -121,7 +127,7 @@ export default function ModelViewer({ active }: { active: boolean }) {
       const delta = previousTime ? Math.min((time - previousTime) / 1000, 0.1) : 0
       previousTime = time
       lastDraw = time
-      controls.autoRotate = !hasInteracted && !reducedMotion.matches
+      controls.autoRotate = !mobile && !hasInteracted && !reducedMotion.matches
       controls.update(delta)
       renderer.render(scene, camera)
       element.dataset.renderCount = String(Number(element.dataset.renderCount ?? 0) + 1)
@@ -173,7 +179,7 @@ export default function ModelViewer({ active }: { active: boolean }) {
       requestDraw()
     }
     const onVisibility = () => { if (document.hidden) pause(); else requestDraw() }
-    const onMotionChange = () => { controls.autoRotate = !hasInteracted && !reducedMotion.matches; requestDraw() }
+    const onMotionChange = () => { controls.autoRotate = !mobile && !hasInteracted && !reducedMotion.matches; requestDraw() }
     const onContextLost = (event: Event) => { event.preventDefault(); contextLost = true; pause(); setState('webgl') }
     const onContextRestored = () => {
       contextLost = false
@@ -203,7 +209,7 @@ export default function ModelViewer({ active }: { active: boolean }) {
     const load = async () => {
       let imported: THREE.Object3D | undefined
       try {
-        const buffer = await pentimentoModelLoader.request()
+        const buffer = await modelLoader.request('high')
         if (disposed) return
         setState('preparing')
         // Let preparation feedback paint before main-thread parsing and GPU setup.
@@ -211,7 +217,7 @@ export default function ModelViewer({ active }: { active: boolean }) {
         if (disposed) return
         const parseStart = performance.now()
         const loader = new GLTFLoader()
-        const gltf = await loader.parseAsync(buffer, new URL('.', new URL(PENTIMENTO_GLB, location.href)).href)
+        const gltf = await loader.parseAsync(buffer, new URL('.', new URL(modelURL, location.href)).href)
         performance.measure('pentimento:model-parse', { start: parseStart, end: performance.now() })
         const prepareStart = performance.now()
         imported = gltf.scene
@@ -267,11 +273,13 @@ export default function ModelViewer({ active }: { active: boolean }) {
       }
     }
     resize()
+    const releaseLoader = mobile ? modelLoader.retain() : () => undefined
     // Delay until after Strict Mode's discarded setup; bytes come from the shared loader.
     const loadTimer = window.setTimeout(() => { void load() }, 0)
 
     return () => {
       disposed = true
+      releaseLoader()
       window.clearTimeout(loadTimer)
       pause()
       observer.disconnect()
@@ -289,23 +297,23 @@ export default function ModelViewer({ active }: { active: boolean }) {
       actions.current = null
       setActive.current = null
     }
-  }, [attempt])
+  }, [attempt, variant])
 
-  useEffect(() => { setActive.current?.(active) }, [active, attempt])
+  useEffect(() => { setActive.current?.(active) }, [active, attempt, variant])
 
   return <>
     <div className="pentimento-visual model-visual">
       <ModelPoster ready={state === 'ready'} />
-      <div ref={host} className="object-canvas" role="group" tabIndex={active && state === 'ready' ? 0 : -1} aria-label="Interactive Pentimento reconstruction. Drag to orbit, scroll or pinch to zoom. Arrow keys rotate; plus and minus zoom." aria-busy={state === 'loading' || state === 'preparing'} data-model-state={state} onKeyDown={event => {
+      <div ref={host} className="object-canvas" role="group" tabIndex={active && state === 'ready' ? 0 : -1} aria-label="Interactive Pentimento reconstruction. Drag to orbit, scroll or pinch to zoom. Arrow keys rotate; plus and minus zoom." aria-busy={state === 'loading' || state === 'preparing'} data-model-state={state} data-model-variant={variant} onKeyDown={event => {
         if (['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', '+', '=', '-'].includes(event.key)) event.preventDefault()
         if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') actions.current?.orbit(event.key === 'ArrowLeft' ? -1 : 1)
         if (event.key === 'ArrowUp' || event.key === 'ArrowDown') actions.current?.orbit(0, event.key === 'ArrowUp' ? -1 : 1)
         if (event.key === '+' || event.key === '=' || event.key === '-') actions.current?.zoom(event.key === '-' ? -1 : 1)
       }} />
-      {(state === 'loading' || state === 'preparing') && <ModelLoading preparing={state === 'preparing'} />}
+      {(state === 'loading' || state === 'preparing') && <ModelLoading preparing={state === 'preparing'} variant={variant} />}
       {state === 'ready' && <span className="sr-only" role="status">Reconstruction ready.</span>}
       {(state === 'error' || state === 'webgl' || state === 'unsupported') && <div className="media-message mono" role="status">
-        <span>{state === 'unsupported' ? 'FULL-RESOLUTION 3D REQUIRES 8K TEXTURE SUPPORT. SHOWING THE REAL RECONSTRUCTION STILL.' : state === 'webgl' ? '3D VIEW REQUIRES WEBGL. SHOWING THE REAL RECONSTRUCTION STILL.' : invalidGeometry ? 'NO VIEWABLE GEOMETRY IN THIS GLB.' : 'RECONSTRUCTION COULD NOT BE LOADED.'}</span>
+        <span>{state === 'unsupported' ? variant === 'mobile' ? '3D VIEW IS NOT SUPPORTED ON THIS DEVICE. SHOWING THE REAL RECONSTRUCTION STILL.' : 'FULL-RESOLUTION 3D REQUIRES 8K TEXTURE SUPPORT. SHOWING THE REAL RECONSTRUCTION STILL.' : state === 'webgl' ? '3D VIEW REQUIRES WEBGL. SHOWING THE REAL RECONSTRUCTION STILL.' : invalidGeometry ? 'NO VIEWABLE GEOMETRY IN THIS GLB.' : 'RECONSTRUCTION COULD NOT BE LOADED.'}</span>
         {state === 'error' && <button className="model-retry" onClick={() => { setState('loading'); setAttempt(value => value + 1) }}>Retry</button>}
       </div>}
     </div>

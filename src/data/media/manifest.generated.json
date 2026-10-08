@@ -48,6 +48,13 @@
     "sha256": "c5d5debee4de333d8a31e1a1c931eb1313b7964f5020475f615edd5e8f24f281",
     "cacheControl": "public, max-age=31536000, immutable, no-transform"
   },
+  "pentimento.model-mobile": {
+    "remotePath": "projects/pentimento/Textured_mesh_1024_400k.c3d000c498548b37e4e88cf81c0906da4321253e738dda57ffdd5cd0c08eaaed.glb",
+    "mime": "model/gltf-binary",
+    "size": 30697560,
+    "sha256": "c3d000c498548b37e4e88cf81c0906da4321253e738dda57ffdd5cd0c08eaaed",
+    "cacheControl": "public, max-age=31536000, immutable, no-transform"
+  },
   "pentimento.source-video": {
     "remotePath": "projects/pentimento/sarah_checkin.70a94bc33da656976e08ca0f26a97b9f678ef745d37e7e409e99f0bd421d0aeb.MOV",
     "mime": "video/quicktime",
