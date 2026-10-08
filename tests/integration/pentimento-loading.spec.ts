@@ -41,9 +41,69 @@ const modelTab = (page: Page) => page.getByRole('tab', { name: 'FINAL MODEL' })
 const calls = (page: Page) => page.evaluate(() => window.modelHarness.calls)
 const viewer = (page: Page) => page.locator('.object-canvas')
 
+async function installMobileProfile(page: Page, profile: { userAgent: string; platform: string; maxTouchPoints: number; mobileHint: boolean }) {
+  await page.addInitScript(profile => {
+    Object.defineProperties(navigator, {
+      userAgent: { configurable: true, value: profile.userAgent },
+      platform: { configurable: true, value: profile.platform },
+      maxTouchPoints: { configurable: true, value: profile.maxTouchPoints },
+      userAgentData: { configurable: true, value: { mobile: profile.mobileHint } },
+    })
+  }, profile)
+}
+
 test('canonical full-size GLB retains its source hash @real-media', () => {
   const hash = '45b568bac1c1246dd703e9827742b1d0102c4e0ffdb2535046d80ed1822026c0'
   for (const path of ['media-source/projects/pentimento/Textured_mesh_1.glb']) expect(createHash('sha256').update(readFileSync(path)).digest('hex')).toBe(hash)
+})
+
+for (const profile of [
+  { name: 'mobile Safari-like', userAgent: 'Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X) AppleWebKit/605.1.15 Version/18.0 Mobile/15E148 Safari/604.1', platform: 'iPhone', maxTouchPoints: 5, mobileHint: true },
+  { name: 'Android-like', userAgent: 'Mozilla/5.0 (Linux; Android 15; Pixel 9) AppleWebKit/537.36 Chrome/140.0 Mobile Safari/537.36', platform: 'Linux armv8l', maxTouchPoints: 5, mobileHint: true },
+]) {
+  test(`${profile.name} blocks viewport and intent loading before viewer import`, async ({ page }) => {
+    await installMobileProfile(page, profile)
+    await controlled(page)
+    const requests: string[] = []
+    page.on('request', request => requests.push(request.url()))
+    await page.goto('/projects/pentimento')
+    const tab = modelTab(page)
+    await tab.scrollIntoViewIfNeeded()
+    await page.waitForTimeout(2700)
+    await tab.focus()
+    await tab.dispatchEvent('pointerenter', { pointerType: 'touch' })
+    await tab.dispatchEvent('pointerdown', { pointerType: 'touch' })
+    await tab.click()
+    await expect(page.getByText('FULL-RESOLUTION INTERACTIVE RECONSTRUCTION AVAILABLE ON DESKTOP')).toBeVisible()
+    await expect(page.locator('.pentimento-model-still')).toBeVisible()
+    await expect(viewer(page)).toHaveCount(0)
+    expect(await calls(page)).toBe(0)
+    expect(requests.filter(url => url.includes('.glb'))).toEqual([])
+    expect(requests.filter(url => url.includes('ModelViewer'))).toEqual([])
+    await page.getByRole('tab', { name: 'INPUT VIDEO' }).click()
+    await expect(page.locator('.pentimento-video')).toBeVisible()
+    await expect(page.getByRole('button', { name: /input video/ })).toBeVisible()
+    await tab.click()
+    await expect(page.locator('.pentimento-model-still')).toBeVisible()
+    expect(await calls(page)).toBe(0)
+  })
+}
+
+test('loader safety rejection occurs before cache access or network fetch', async ({ page }) => {
+  await page.goto('/ivan')
+  const result = await page.evaluate(async () => {
+    const { createModelLoader } = await import('/src/projects/pentimento/modelLoader.ts')
+    let cacheOpens = 0
+    let fetches = 0
+    const loader = createModelLoader({
+      allowRequest: () => false,
+      openCache: async () => { cacheOpens++; return undefined },
+      fetch: async () => { fetches++; return new Response() },
+    })
+    const error = await loader.request().then(() => '', reason => String(reason))
+    return { cacheOpens, fetches, phase: loader.getSnapshot().phase, error }
+  })
+  expect(result).toEqual({ cacheOpens: 0, fetches: 0, phase: 'idle', error: 'Error: The full-resolution Pentimento model is desktop-only.' })
 })
 
 test('approach warms viewer code; meaningful visibility fetches bytes without mounting a viewer', async ({ page }) => {

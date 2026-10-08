@@ -7,7 +7,7 @@ import { prepareCustomGLBShell } from './prepareCustomGLBShell'
 import { pentimentoModelLoader } from './modelLoader'
 import { ModelLoading } from './ModelLoading'
 import { ModelPoster } from './ModelPoster'
-import { fullModelCapability } from './capabilities'
+import { canUseInteractivePentimentoModel, fullModelCapability } from './capabilities'
 
 type LoadState = 'loading' | 'preparing' | 'ready' | 'error' | 'webgl' | 'unsupported'
 interface ViewerControls { reset: () => void; orbit: (horizontal: number, vertical?: number) => void; zoom: (direction: number) => void }
@@ -48,6 +48,9 @@ export default function ModelViewer({ active }: { active: boolean }) {
   useEffect(() => {
     const element = host.current
     if (!element) return
+    // Defense in depth. Mobile entry points never import this module, but a
+    // future caller must still be stopped before WebGL or model loading.
+    if (!canUseInteractivePentimentoModel()) return
     const capability = fullModelCapability()
     // Synchronize the UI with the actual device capability probe.
     // oxlint-disable-next-line react/set-state-in-effect

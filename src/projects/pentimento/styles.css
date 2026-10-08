@@ -53,6 +53,7 @@
   .pentimento-experience .pentimento-loading { gap:6px; }
   .pentimento-experience .pentimento-download-details { gap:5px; }
   .pentimento-video-status { position:absolute; bottom:12px; left:12px; padding:10px; background:#22271fe6; color:#bac88c; font-size:10px; }
+  .pentimento-mobile-note { position:absolute; left:12px; bottom:12px; max-width:360px; padding:10px 14px; background:#22271fb3; color:#bac88c; font-size:9px; letter-spacing:.04em; }
 }
 @media (prefers-reduced-motion:reduce) {
   .pentimento-experience .pentimento-panel, .pentimento-experience .pentimento-switch-indicator, .pentimento-experience .pentimento-model-still, .pentimento-experience .object-canvas { transition:none; }

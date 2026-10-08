@@ -1,4 +1,5 @@
 import { PENTIMENTO_GLB } from './media'
+import { canUseInteractivePentimentoModel } from './capabilities'
 
 // Bump this version whenever the source GLB changes. The original URL stays compatible.
 export const MODEL_CACHE = 'pentimento-assets-v1'
@@ -12,6 +13,7 @@ type Dependencies = {
   url?: string
   fetch?: typeof fetch
   openCache?: () => Promise<Cache | undefined>
+  allowRequest?: () => boolean
 }
 const initial: DownloadSnapshot = { phase: 'idle', received: 0, total: null, source: null }
 
@@ -25,6 +27,7 @@ export function createModelLoader(dependencies: Dependencies = {}) {
   const url = dependencies.url ?? PENTIMENTO_GLB
   const fetchModel = dependencies.fetch ?? ((...args) => fetch(...args))
   const openCache = dependencies.openCache ?? (async () => typeof caches === 'undefined' ? undefined : caches.open(MODEL_CACHE))
+  const allowRequest = dependencies.allowRequest ?? canUseInteractivePentimentoModel
   let snapshot = initial
   let bytes: ArrayBuffer | undefined
   let flight: Promise<ArrayBuffer> | undefined
@@ -35,6 +38,7 @@ export function createModelLoader(dependencies: Dependencies = {}) {
   const publish = (next: DownloadSnapshot) => { snapshot = next; listeners.forEach(listener => listener()) }
 
   const request = (priority: 'auto' | 'high' | 'low' = 'auto'): Promise<ArrayBuffer> => {
+    if (!allowRequest()) return Promise.reject(new Error('The full-resolution Pentimento model is desktop-only.'))
     if (bytes) return Promise.resolve(bytes)
     if (flight) {
       // A rapid route remount may arrive while the previous abort is still settling.

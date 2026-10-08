@@ -1,6 +1,6 @@
 # Pentimento: conference preview delivery
 
-The experience now presents real imagery before the full-resolution interactive model is ready. No geometry, texture, material, transform, or hierarchy has been changed. This is a local implementation; **no upload, commit, push, or deployment has occurred**.
+The experience presents real imagery before the full-resolution interactive model is ready. No geometry, texture, material, transform, or hierarchy has been changed. The conference build uses a temporary conservative safety policy: phones, tablets, and touch-capable devices receive the genuine reconstruction still when FINAL MODEL is selected, while the complete interactive model remains available on desktop.
 
 ## Assets and encoding
 
@@ -21,14 +21,15 @@ Frames at accelerated times 2, 8, and 15 seconds were compared visually with the
 
 ## Loading behavior
 
-- Far from Pentimento: no video or GLB download. Existing near-viewport JavaScript preloading remains.
+- Far from Pentimento: no video or GLB download. Existing near-viewport JavaScript preloading remains on desktop.
+- On phones, tablets, and touch-capable devices, the safety policy runs before viewer-code import, cache access, network fetch, parsing, or WebGL initialization. Viewport visibility, dwell, hover, focus, pointer activity, and explicit FINAL MODEL selection cannot request the GLB. FINAL MODEL immediately presents the genuine lightweight reconstruction still with a desktop-availability note, and INPUT VIDEO remains switchable.
 - On approach: lightweight input/model images warm with the interface. Visible input video starts muted and inline; reduced motion keeps its poster until Play is selected.
 - Automatic GLB prefetch requires 30% exhibit visibility, an active visible tab, permitted network settings, actual video playback without a stall, 1.5 seconds of stable playback, and at least 5 seconds buffered ahead (or the whole clip buffered). Save-Data, 2G/3G, reported downlink below 8 Mbps, or RTT above 300 ms suppress automatic prefetch. Where connection information is unavailable, observed video buffering gates it.
-- Hover, focus, touch, or selection of FINAL MODEL is explicit intent and bypasses automatic network restrictions. The active fetch is reused; no duplicate request or discarded partial GLB is introduced. A new explicit request uses high fetch priority; automatic requests use low priority where supported.
+- On desktop, hover, focus, pointer intent, or selection of FINAL MODEL bypasses automatic network restrictions. The active fetch is reused; no duplicate request or discarded partial GLB is introduced. A new explicit request uses high fetch priority; automatic requests use low priority where supported.
 - Selection immediately mounts the real still and genuine byte progress. The existing tab transition remains; a separate 400 ms still-to-canvas crossfade starts only after parsing, scene setup, shader compilation and an initial render. Reduced motion disables transitions.
 - Incomplete video downloads are released on model selection by detaching the source and calling `load()`, retaining the playback position for a clean return. Fully buffered video is kept attached. This avoids assuming `pause()` cancels network traffic; partially buffered browser media may be discarded on detach, with normal HTTP caching still available.
 - Switching tabs keeps the prepared scene. Route departure disposes the GPU resources; returning shows the still and reparses session/Cache Storage bytes.
-- A short-lived WebGL2 capability probe checks 8192px texture support before requesting the model. No WebGL or insufficient texture support leaves the genuine still with an accessible explanation. Passing this check is not a VRAM guarantee: context loss or preparation failure also restores the still. No automatic downscaling is introduced.
+- After the mobile/touch safety gate passes, a short-lived desktop WebGL2 capability probe checks 8192px texture support before requesting the model. `MAX_TEXTURE_SIZE` is not treated as evidence of sufficient device memory. No WebGL or insufficient texture support leaves the genuine still with an accessible explanation. Passing this check is not a VRAM guarantee: context loss or preparation failure also restores the still. No automatic downscaling is introduced.
 
 The viewer and still share a contained 10:7 camera viewport, initial orientation, lights, and color settings. The exterior exhibit dimensions and controls remain unchanged. Controls remain disabled until interactive readiness; the still is explicitly described as noninteractive.
 
