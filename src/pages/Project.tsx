@@ -20,7 +20,7 @@ export function ProjectPage({ project, registry }: { project: ProjectData; regis
       <Link to={categoryConfig(project.category).href} className="back-link mono">← BACK TO {categoryConfig(project.category).label}</Link>
       <div className="section-topline mono"><span>{String(project.order).padStart(2, '0')} / {categoryConfig(project.category).label}</span>{project.status && <span className="status"><i />{project.status}</span>}</div>
       <div className="project-heading"><h1>{project.title}</h1>{project.description && <p>{project.description}</p>}</div>
-      <ProjectPreview key={project.id} project={project} primary />
+      {!project.projectPage?.hidePrimaryExperience && <ProjectPreview key={project.id} project={project} primary />}
     </div>
     {Content ? <Suspense fallback={<div className="experience-loading mono">Loading project details…</div>}><Content /></Suspense> : <ProjectContent project={project} />}
     <ProjectNavigation project={project} registry={registry} />

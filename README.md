@@ -23,7 +23,7 @@ VITE_MEDIA_BASE_URL=https://media.example.com npm run validate
 - [Media workflow and original-file inventory](docs/media-workflow.md)
 - [Adding a project or editorial record](docs/adding-a-project.md)
 - [CDN, CORS, Vercel, and GitHub Pages setup](docs/deployment.md)
-- Project methodology: [Argus](docs/projects/argus.md), [Pentimento](docs/projects/pentimento.md), [10,000 Futures](docs/projects/monte-carlo.md)
+- Project methodology: [Argus](docs/projects/argus.md), [Pentimento](docs/projects/pentimento.md), [10,000 Futures](docs/projects/monte-carlo.md), [Image Recognition](docs/projects/image-recognition.md), [AHU Digitalization](docs/projects/ahu-digitalization.md)
 - [Migration report](docs/migration-report.md) and [complete move/hash inventory](docs/migration.json)
 
 No cloud resources are created by development or build commands. Media synchronization is a separate, explicit workflow. Git excludes heavy originals and private configuration; only the documented tiny test fixtures are included.

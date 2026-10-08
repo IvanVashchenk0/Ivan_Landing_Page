@@ -1,6 +1,54 @@
 {
   "version": 1,
   "assets": {
+    "ahu.application": {
+      "sourcePath": "projects/ahu-digitalization/ahu_application_explore.mp4",
+      "remotePath": "projects/ahu-digitalization/ahu_application_explore.f8ed7e89341719b8b3c9011a27303dc6d7b47a41627fa2f37babaf2089e3951a.mp4",
+      "mime": "video/mp4",
+      "size": 5224258,
+      "sha256": "f8ed7e89341719b8b3c9011a27303dc6d7b47a41627fa2f37babaf2089e3951a",
+      "cacheControl": "public, max-age=31536000, immutable, no-transform"
+    },
+    "ahu.complete-pipeline": {
+      "sourcePath": "projects/ahu-digitalization/full_pipeline_ahu.mp4",
+      "remotePath": "projects/ahu-digitalization/full_pipeline_ahu.73f5c22d993e72cbe1c4c7984ed3f000da1a3fa1e912bbc45364f933a900074a.mp4",
+      "mime": "video/mp4",
+      "size": 31163283,
+      "sha256": "73f5c22d993e72cbe1c4c7984ed3f000da1a3fa1e912bbc45364f933a900074a",
+      "cacheControl": "public, max-age=31536000, immutable, no-transform"
+    },
+    "ahu.engineering-output": {
+      "sourcePath": "projects/ahu-digitalization/engineering_explore.mp4",
+      "remotePath": "projects/ahu-digitalization/engineering_explore.b0d6c3c6453feec71094c480365a1b4024a91f2381c4122ea81a0d1fabab8ce1.mp4",
+      "mime": "video/mp4",
+      "size": 5172661,
+      "sha256": "b0d6c3c6453feec71094c480365a1b4024a91f2381c4122ea81a0d1fabab8ce1",
+      "cacheControl": "public, max-age=31536000, immutable, no-transform"
+    },
+    "ahu.model-generation": {
+      "sourcePath": "projects/ahu-digitalization/generate_explore.mp4",
+      "remotePath": "projects/ahu-digitalization/generate_explore.3c5ac58e1d3654df64aa5e2e4cc920da6c201e97139ab93c678e63752a1061a1.mp4",
+      "mime": "video/mp4",
+      "size": 20565564,
+      "sha256": "3c5ac58e1d3654df64aa5e2e4cc920da6c201e97139ab93c678e63752a1061a1",
+      "cacheControl": "public, max-age=31536000, immutable, no-transform"
+    },
+    "ahu.preview": {
+      "sourcePath": "projects/ahu-digitalization/full_pipeline_ahu_preview.mp4",
+      "remotePath": "projects/ahu-digitalization/full_pipeline_ahu_preview.39b3834ff5439ee8b8d35ff016d1e496b25c8eda0ee79c3b78aa88ffcff2c1b1.mp4",
+      "mime": "video/mp4",
+      "size": 11225336,
+      "sha256": "39b3834ff5439ee8b8d35ff016d1e496b25c8eda0ee79c3b78aa88ffcff2c1b1",
+      "cacheControl": "public, max-age=31536000, immutable, no-transform"
+    },
+    "ahu.scanning": {
+      "sourcePath": "projects/ahu-digitalization/scan_explore.mp4",
+      "remotePath": "projects/ahu-digitalization/scan_explore.b5272e609232fe394ce3cb71bb1be7969f98b9ba3a8d726c340f9e0802fb08b4.mp4",
+      "mime": "video/mp4",
+      "size": 5076330,
+      "sha256": "b5272e609232fe394ce3cb71bb1be7969f98b9ba3a8d726c340f9e0802fb08b4",
+      "cacheControl": "public, max-age=31536000, immutable, no-transform"
+    },
     "editorial.acmc-chronicle": {
       "sourcePath": "editorial/publications/acmc-chronicle.pdf",
       "remotePath": "editorial/publications/acmc-chronicle.6e3a54cde87e6cd0d69522a78bcdf727df3c819090b9a7a55ff9fac5e2ab867b.pdf",

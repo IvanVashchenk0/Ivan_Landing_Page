@@ -20,7 +20,7 @@ test('sixteen catalog entries preserve category order, homepage curation, and ho
     }
   }
   const placeholders = projects.filter(project => project.previewType === 'placeholder')
-  expect(placeholders).toHaveLength(12)
+  expect(placeholders).toHaveLength(11)
   for (const project of placeholders) {
     expect(project.details).toEqual([])
     expect(project.sections).toBeUndefined()
@@ -40,7 +40,7 @@ test('category exhibits include a numbered section and explicit Explore Project 
       await expect(section.locator('.section-topline')).toContainText(`/ ${category.toUpperCase()}`)
       await expect(section.getByRole('link', { name: 'EXPLORE PROJECT', exact: true })).toHaveAttribute('href', `/projects/${ids[i]}`)
       await expect(section.locator('h2 a')).toHaveAttribute('href', `/projects/${ids[i]}`)
-      if (!['argus', 'pentimento', 'image-recognition', 'monte-carlo'].includes(ids[i])) {
+      if (!['argus', 'pentimento', 'image-recognition', 'monte-carlo', 'ahu-digitalization'].includes(ids[i])) {
         await expect(section.getByText('PREVIEW IN DEVELOPMENT', { exact: true })).toBeVisible()
         expect((await section.locator('.portfolio-placeholder').boundingBox())!.height).toBeGreaterThanOrEqual(410)
         await section.locator('.portfolio-placeholder').click()

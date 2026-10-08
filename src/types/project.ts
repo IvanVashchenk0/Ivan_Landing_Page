@@ -35,7 +35,7 @@ export type ProjectDefinition = ProjectPreview & {
   featuredOrder?: number
   // Existing exhibit style identifier; it no longer dispatches project logic.
   experience?: string
-  projectPage?: { loadContent: ComponentLoader }
+  projectPage?: { loadContent: ComponentLoader; hidePrimaryExperience?: boolean }
   media?: MediaReference[]
   metadata?: { year?: number; links?: { label: string; href: string }[] }
   eyebrow?: string
