@@ -56,12 +56,12 @@ test('real reconstruction loads once, supports orbit and zoom, and survives swit
   const errors: string[] = []
   const modelRequests: string[] = []
   page.on('pageerror', error => errors.push(error.message))
-  page.on('request', request => { if (request.url().includes('Textured_mesh_1.')) modelRequests.push(request.url()) })
+  page.on('request', request => { if (request.url().includes('Textured_mesh_1_binary-repacked.')) modelRequests.push(request.url()) })
   await page.emulateMedia({ reducedMotion: 'reduce' })
   await page.goto('/projects/pentimento')
   const input = page.getByRole('tab', { name: 'INPUT VIDEO' })
   await expect(input).toHaveAttribute('aria-selected', 'true')
-  await expect.poll(() => modelRequests.length).toBe(1)
+  expect(modelRequests).toHaveLength(0)
   await expect(page.locator('.object-canvas')).toHaveCount(0)
   await input.focus()
   await page.keyboard.press('ArrowRight')
@@ -100,7 +100,7 @@ test('3D fallback remains readable without WebGL', async ({ page }) => {
   })
   await page.goto('/projects/pentimento')
   await page.getByRole('tab', { name: 'FINAL MODEL' }).click()
-  await expect(page.getByText('3D VIEW REQUIRES WEBGL. INPUT VIDEO IS STILL AVAILABLE.')).toBeVisible()
+  await expect(page.getByText('3D VIEW REQUIRES WEBGL. SHOWING THE REAL RECONSTRUCTION STILL.')).toBeVisible()
   await expect(page.getByRole('button', { name: 'Reset view' })).toBeDisabled()
   await page.getByRole('tab', { name: 'INPUT VIDEO' }).click()
   await expect(page.locator('video')).toBeVisible()

@@ -50,3 +50,11 @@ media-source/
 .cache/
 test-results-deployment/
 test-results-media/
+
+# Editor/OS scratch files (in addition to the existing cache and log exclusions)
+*.tmp
+*.temp
+*~
+._*
+.TemporaryItems/
+.Trashes/

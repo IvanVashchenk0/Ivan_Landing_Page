@@ -34,7 +34,9 @@ Production rejects missing CDN configuration or local mode. It reads only the co
 
 ## Optional upload tooling
 
-Install AWS CLI v2 only to synchronize. Set `MEDIA_BUCKET`, optional `MEDIA_ENDPOINT`, `MEDIA_REGION` (default `auto` for R2), and `MEDIA_PROFILE`; use a normal AWS CLI credential profile or AWS credential environment variables. An ignored `.env.media.local` is also supported. See `.env.example`. **Never use VITE_ names for credentials.** That prefix is public browser configuration.
+The preferred workflow uses the `ivan-r2` AWS CLI profile and `R2_BUCKET`, `R2_ENDPOINT`, `R2_REGION`, `R2_AWS_PROFILE`, and optional `R2_PUBLIC_BASE_URL` in ignored `.env.media.local`. Follow the [manual setup checklist](r2-setup.md). The earlier `MEDIA_*` names and optional AWS environment credentials remain fallback-compatible. Never prefix credentials with `VITE_`.
+
+`npm run media:connection` verifies CLI v2, profile existence, and read-only bucket access. Real synchronization repeats this precheck before inspecting or uploading objects.
 
 `npm run media:sync -- --dry-run` is completely offline: verifies local sources and lists the proposed keys, without reading upload secrets or invoking AWS. It cannot claim a remote object exists.
 

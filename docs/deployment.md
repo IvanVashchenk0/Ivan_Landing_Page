@@ -2,6 +2,8 @@
 
 This refactor does not create buckets, upload files, publish a site, initialize Git, commit, or push. Live provider checks remain pending until storage is configured.
 
+Start with the [manual R2/profile checklist](r2-setup.md). No upload or deployment occurs as part of configuration.
+
 1. Configure an existing R2/S3 bucket and public media domain separately.
 2. Set upload-only configuration described in [media workflow](media-workflow.md), then explicitly synchronize when ready.
 3. Set `VITE_MEDIA_BASE_URL=https://media.example.com` in application build settings. Do not set `VITE_USE_LOCAL_MEDIA=true` in production.

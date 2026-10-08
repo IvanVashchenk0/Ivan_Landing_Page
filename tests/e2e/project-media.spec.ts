@@ -1,6 +1,6 @@
 import { expect, test } from '@playwright/test'
 
-test('input walkthrough plays inline at 5× and pauses when hidden or manually paused', async ({ page }) => {
+test('input walkthrough plays the accelerated derivative inline at 1× and pauses when hidden or manually paused', async ({ page }) => {
   await page.goto('/')
   await page.locator('#pentimento').scrollIntoViewIfNeeded()
   const video = page.locator('#pentimento video')
@@ -11,7 +11,7 @@ test('input walkthrough plays inline at 5× and pauses when hidden or manually p
   await expect(video).toHaveJSProperty('loop', true)
   await expect(video).toHaveJSProperty('controls', false)
   await expect.poll(() => video.evaluate(element => (element as HTMLVideoElement).readyState), { timeout: 20000 }).toBeGreaterThanOrEqual(2)
-  await expect(video).toHaveJSProperty('playbackRate', 5)
+  await expect(video).toHaveJSProperty('playbackRate', 1)
   await expect(video).toHaveJSProperty('paused', false)
   await page.getByRole('button', { name: 'Pause input video' }).click()
   await expect(video).toHaveJSProperty('paused', true)
@@ -24,7 +24,7 @@ test('input walkthrough plays inline at 5× and pauses when hidden or manually p
 })
 
 test('failed reconstruction offers retry and keeps the input available', async ({ page }) => {
-  await page.route('**/Textured_mesh_1.*.glb', route => route.fulfill({ status: 503, body: 'Unavailable' }))
+  await page.route('**/Textured_mesh_1_binary-repacked.*.glb', route => route.fulfill({ status: 503, body: 'Unavailable' }))
   await page.goto('/projects/pentimento')
   await page.getByRole('tab', { name: 'FINAL MODEL' }).click()
   await expect(page.getByText('RECONSTRUCTION COULD NOT BE LOADED.')).toBeVisible()

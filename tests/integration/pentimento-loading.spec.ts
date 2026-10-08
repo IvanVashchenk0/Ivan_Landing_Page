@@ -30,7 +30,7 @@ async function controlled(page: Page, options: { saveData?: boolean; effectiveTy
     }
     window.modelHarness = harness
     window.fetch = (input, init) => {
-      if (!String(input).includes('Textured_mesh_1.')) return original(input, init)
+      if (!String(input).includes('Textured_mesh_1_binary-repacked.')) return original(input, init)
       harness.calls++; offset = 0
       init?.signal?.addEventListener('abort', () => { harness.aborts++; stream.error(new DOMException('Aborted', 'AbortError')) })
       return Promise.resolve(new Response(new ReadableStream({ start(controller) { stream = controller } }), { headers: options.length === false ? {} : { 'content-length': String(bytes.length) } }))
@@ -67,13 +67,14 @@ test('approach warms viewer code; meaningful visibility fetches bytes without mo
 })
 
 for (const connection of [{ saveData: true }, { effectiveType: '2g' }, { effectiveType: '3g' }]) {
-  test(`constrained connection ${JSON.stringify(connection)} requires explicit selection`, async ({ page }) => {
+  test(`constrained connection ${JSON.stringify(connection)} requires model intent`, async ({ page }) => {
     await controlled(page, connection)
     await page.goto('/projects/pentimento')
-    await modelTab(page).hover()
-    await modelTab(page).focus()
     await page.waitForTimeout(2700)
     expect(await calls(page)).toBe(0)
+    await modelTab(page).hover()
+    await modelTab(page).focus()
+    await expect.poll(() => calls(page)).toBe(1)
     await modelTab(page).click()
     await expect.poll(() => calls(page)).toBe(1)
     await page.evaluate(() => window.modelHarness.finish())
@@ -105,7 +106,7 @@ test('selection shares the active stream, reports bytes, then prepares and retai
   await expect(page.getByText('50%', { exact: true })).toBeVisible()
   await expect(page.getByRole('progressbar')).toHaveAttribute('max', String(fixture.length))
   expect(await calls(page)).toBe(1)
-  for (const width of [1440, 390]) {
+  for (const width of [1440, 768, 390, 320]) {
     await page.setViewportSize({ width, height: 900 })
     await expect(page.locator('.pentimento-panel[data-active=true]')).toHaveCSS('opacity', '1')
     await page.locator('.pentimento-experience').screenshot({ path: test.info().outputPath(`download-${width}.png`) })
@@ -120,7 +121,6 @@ test('selection shares the active stream, reports bytes, then prepares and retai
   await page.getByRole('tab', { name: 'INPUT VIDEO' }).click()
   await page.evaluate(() => { Object.defineProperty(document, 'hidden', { configurable: true, value: true }); document.dispatchEvent(new Event('visibilitychange')) })
   await page.evaluate(() => window.modelHarness.finish())
-  await expect(viewer(page)).toHaveAttribute('data-model-state', 'ready')
   await page.evaluate(() => { Object.defineProperty(document, 'hidden', { configurable: true, value: false }); document.dispatchEvent(new Event('visibilitychange')) })
   await modelTab(page).click()
   await expect(viewer(page)).toHaveAttribute('data-model-state', 'ready')
@@ -161,8 +161,8 @@ test('persistent cache survives reload, preserves exact bytes, and avoids networ
   await page.goto('/projects/pentimento')
   await expect.poll(() => calls(page)).toBe(1)
   await page.evaluate(() => window.modelHarness.finish())
-  await expect.poll(() => page.evaluate(async () => Boolean(await (await caches.open('pentimento-assets-v1')).match('/__media/projects/pentimento/Textured_mesh_1.45b568bac1c1246dd703e9827742b1d0102c4e0ffdb2535046d80ed1822026c0.glb')))).toBe(true)
-  expect(await page.evaluate(async () => [...new Uint8Array(await (await (await caches.open('pentimento-assets-v1')).match('/__media/projects/pentimento/Textured_mesh_1.45b568bac1c1246dd703e9827742b1d0102c4e0ffdb2535046d80ed1822026c0.glb'))!.arrayBuffer())])).toEqual(fixture)
+  await expect.poll(() => page.evaluate(async () => Boolean(await (await caches.open('pentimento-assets-v1')).match('/__media/projects/pentimento/Textured_mesh_1_binary-repacked.c5d5debee4de333d8a31e1a1c931eb1313b7964f5020475f615edd5e8f24f281.glb')))).toBe(true)
+  expect(await page.evaluate(async () => [...new Uint8Array(await (await (await caches.open('pentimento-assets-v1')).match('/__media/projects/pentimento/Textured_mesh_1_binary-repacked.c5d5debee4de333d8a31e1a1c931eb1313b7964f5020475f615edd5e8f24f281.glb'))!.arrayBuffer())])).toEqual(fixture)
   await page.reload()
   await modelTab(page).click()
   await expect(viewer(page)).toHaveAttribute('data-model-state', 'ready')
@@ -201,12 +201,12 @@ test('loader shares one promise, tolerates failed cache writes, and preserves co
 
 
 test('local server reports the original length and serves a real byte range @real-media', async ({ request }) => {
-  const path = 'media-source/projects/pentimento/Textured_mesh_1.glb'
+  const path = 'media-source/projects/pentimento/Textured_mesh_1_binary-repacked.glb'
   const size = statSync(path).size
-  const head = await request.head('/__media/projects/pentimento/Textured_mesh_1.45b568bac1c1246dd703e9827742b1d0102c4e0ffdb2535046d80ed1822026c0.glb')
+  const head = await request.head('/__media/projects/pentimento/Textured_mesh_1_binary-repacked.c5d5debee4de333d8a31e1a1c931eb1313b7964f5020475f615edd5e8f24f281.glb')
   expect(head.status()).toBe(200)
   expect(head.headers()['content-length']).toBe(String(size))
-  const range = await request.get('/__media/projects/pentimento/Textured_mesh_1.45b568bac1c1246dd703e9827742b1d0102c4e0ffdb2535046d80ed1822026c0.glb', { headers: { Range: 'bytes=0-11' } })
+  const range = await request.get('/__media/projects/pentimento/Textured_mesh_1_binary-repacked.c5d5debee4de333d8a31e1a1c931eb1313b7964f5020475f615edd5e8f24f281.glb', { headers: { Range: 'bytes=0-11' } })
   expect(range.status()).toBe(206)
   expect(range.headers()['accept-ranges']).toBe('bytes')
   expect(range.headers()['content-range']).toBe(`bytes 0-11/${size}`)
@@ -242,4 +242,72 @@ test('an immediate remount waits for cancellation to settle before starting one 
     return { whileAborting, requests, phase: loader.getSnapshot().phase }
   }, fixture)
   expect(result).toEqual({ whileAborting: 1, requests: 2, phase: 'downloaded' })
+})
+
+test('stalled input does not compete with automatic model fetch; explicit intent overrides it', async ({ page }) => {
+  await controlled(page)
+  await page.route('**/sarah_checkin-web.*.mp4', async route => { await new Promise(resolve => setTimeout(resolve, 5000)); await route.abort().catch(() => undefined) })
+  await page.goto('/projects/pentimento')
+  await expect(page.locator('.pentimento-video')).toHaveAttribute('poster', /input-poster.webp/)
+  await page.waitForTimeout(2300)
+  expect(await calls(page)).toBe(0)
+  await modelTab(page).click()
+  await expect.poll(() => calls(page)).toBe(1)
+  await expect(page.locator('.pentimento-model-still')).toBeVisible()
+  await expect(page.locator('.pentimento-model-still')).toHaveAttribute('data-ready','false')
+  // Selecting the model explicitly releases an incompletely buffered video request.
+  await expect(page.locator('.pentimento-video')).not.toHaveAttribute('src', /mp4/)
+  await page.evaluate(() => window.modelHarness.push(.5))
+  await expect(page.getByText('50%', { exact:true })).toBeVisible()
+  await page.evaluate(() => window.modelHarness.finish())
+  await expect(viewer(page)).toHaveAttribute('data-model-state','ready')
+  await expect(page.locator('.pentimento-model-still')).toHaveAttribute('data-ready','true')
+})
+
+test('reduced motion keeps the input poster until user playback and removes the model crossfade', async ({ page }) => {
+  await controlled(page)
+  await page.emulateMedia({ reducedMotion:'reduce' })
+  await page.goto('/projects/pentimento')
+  await page.waitForTimeout(2000)
+  expect(await calls(page)).toBe(0)
+  await expect(page.locator('.pentimento-video')).not.toHaveAttribute('src', /mp4/)
+  await page.getByRole('button',{name:'Play input video'}).click()
+  await expect(page.locator('.pentimento-video')).toHaveJSProperty('paused',false)
+  await expect(page.locator('.pentimento-video')).toHaveJSProperty('playbackRate',1)
+  await modelTab(page).click()
+  await expect(page.locator('.pentimento-model-still')).toHaveCSS('transition-duration','0s')
+})
+
+test('unsupported 8K textures retain the still and never download or resize the GLB', async ({ page }) => {
+  await controlled(page)
+  await page.addInitScript(() => {
+    const original = WebGL2RenderingContext.prototype.getParameter
+    WebGL2RenderingContext.prototype.getParameter = function(parameter) { return parameter === this.MAX_TEXTURE_SIZE ? 4096 : original.call(this,parameter) }
+  })
+  await page.goto('/projects/pentimento')
+  await modelTab(page).click()
+  await expect(page.getByText(/FULL-RESOLUTION 3D REQUIRES 8K TEXTURE SUPPORT/)).toBeVisible()
+  await expect(page.locator('.pentimento-model-still')).toBeVisible()
+  expect(await calls(page)).toBe(0)
+  await expect(page.locator('.object-canvas canvas')).toHaveCount(0)
+})
+
+test('autoplay refusal leaves the poster and a working user playback control', async ({ page }) => {
+  await controlled(page, { saveData:true })
+  await page.addInitScript(() => {
+    const play = HTMLMediaElement.prototype.play
+    let permitted = false
+    document.addEventListener('click', () => { permitted = true }, true)
+    HTMLMediaElement.prototype.play = function() {
+      return permitted ? play.call(this) : Promise.reject(new DOMException('Autoplay disabled','NotAllowedError'))
+    }
+  })
+  await page.goto('/projects/pentimento')
+  const video = page.locator('.pentimento-video')
+  await expect(video).toHaveAttribute('poster',/input-poster.webp/)
+  await expect(video).toHaveJSProperty('paused',true)
+  await page.getByRole('button',{name:'Play input video'}).click()
+  await expect(video).toHaveJSProperty('paused',false)
+  await video.evaluate((element:HTMLVideoElement) => { element.currentTime = Math.max(0,element.duration-.1) })
+  await expect.poll(() => video.evaluate((element:HTMLVideoElement) => element.currentTime)).toBeLessThan(.9)
 })

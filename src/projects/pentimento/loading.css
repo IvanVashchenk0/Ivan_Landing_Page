@@ -5,3 +5,8 @@
 .pentimento-download-details progress::-webkit-progress-value { background:#bac88c; }
 .pentimento-download-details progress::-moz-progress-bar { background:#bac88c; }
 .pentimento-loading small { font-size:8px; letter-spacing:.05em; }
+/* Keep genuine progress below the focal area of the reconstruction still. */
+.pentimento-experience .pentimento-loading { gap:6px; }
+.pentimento-experience .pentimento-download-details { display:grid; grid-template-columns:auto 1fr; gap:6px 12px; width:100%; font-size:9px; }
+.pentimento-experience .pentimento-download-details progress { grid-column:1 / -1; }
+.pentimento-experience .pentimento-loading small { position:absolute; width:1px; height:1px; overflow:hidden; clip-path:inset(50%); }

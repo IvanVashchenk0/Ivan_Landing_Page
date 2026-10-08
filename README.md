@@ -27,3 +27,17 @@ VITE_MEDIA_BASE_URL=https://media.example.com npm run validate
 - [Migration report](docs/migration-report.md) and [complete move/hash inventory](docs/migration.json)
 
 No cloud resources are created by development or build commands. Media synchronization is a separate, explicit workflow. Git excludes heavy originals and private configuration; only the documented tiny test fixtures are included.
+
+## Heavy media
+
+Fill the ignored `.env.media.local` R2 settings, then manually configure `aws configure --profile ivan-r2`.
+
+```sh
+npm run media:verify
+npm run media:connection
+npm run media:sync -- --dry-run
+# Inspect the plan; only after approving it yourself:
+npm run media:sync
+```
+
+See the [exact R2 setup checklist](docs/r2-setup.md) for profile prompts, configuration fields, and future public-domain setup. Nothing uploads automatically.

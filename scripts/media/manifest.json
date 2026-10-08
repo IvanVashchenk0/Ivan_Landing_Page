@@ -33,12 +33,28 @@
       "sha256": "e1d1738e92a6be745fe4bbc43f9644069ba78ab0829c9507b8b962b895923d94",
       "cacheControl": "public, max-age=31536000, immutable, no-transform"
     },
+    "pentimento.input-video-web": {
+      "sourcePath": "projects/pentimento/sarah_checkin-web.mp4",
+      "remotePath": "projects/pentimento/sarah_checkin-web.4f9f568c497f204ff79fec7644d43c56fcf9539df6ca4d8f1e4403587ec315b2.mp4",
+      "mime": "video/mp4",
+      "size": 19756992,
+      "sha256": "4f9f568c497f204ff79fec7644d43c56fcf9539df6ca4d8f1e4403587ec315b2",
+      "cacheControl": "public, max-age=31536000, immutable, no-transform"
+    },
     "pentimento.model": {
       "sourcePath": "projects/pentimento/Textured_mesh_1.glb",
       "remotePath": "projects/pentimento/Textured_mesh_1.45b568bac1c1246dd703e9827742b1d0102c4e0ffdb2535046d80ed1822026c0.glb",
       "mime": "model/gltf-binary",
       "size": 233840976,
       "sha256": "45b568bac1c1246dd703e9827742b1d0102c4e0ffdb2535046d80ed1822026c0",
+      "cacheControl": "public, max-age=31536000, immutable, no-transform"
+    },
+    "pentimento.model-binary-repacked": {
+      "sourcePath": "projects/pentimento/Textured_mesh_1_binary-repacked.glb",
+      "remotePath": "projects/pentimento/Textured_mesh_1_binary-repacked.c5d5debee4de333d8a31e1a1c931eb1313b7964f5020475f615edd5e8f24f281.glb",
+      "mime": "model/gltf-binary",
+      "size": 189842544,
+      "sha256": "c5d5debee4de333d8a31e1a1c931eb1313b7964f5020475f615edd5e8f24f281",
       "cacheControl": "public, max-age=31536000, immutable, no-transform"
     },
     "pentimento.source-video": {

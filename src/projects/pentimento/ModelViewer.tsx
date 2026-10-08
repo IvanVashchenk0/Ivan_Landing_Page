@@ -6,8 +6,10 @@ import { PENTIMENTO_GLB } from './media'
 import { prepareCustomGLBShell } from './prepareCustomGLBShell'
 import { pentimentoModelLoader } from './modelLoader'
 import { ModelLoading } from './ModelLoading'
+import { ModelPoster } from './ModelPoster'
+import { fullModelCapability } from './capabilities'
 
-type LoadState = 'loading' | 'preparing' | 'ready' | 'error' | 'webgl'
+type LoadState = 'loading' | 'preparing' | 'ready' | 'error' | 'webgl' | 'unsupported'
 interface ViewerControls { reset: () => void; orbit: (horizontal: number, vertical?: number) => void; zoom: (direction: number) => void }
 
 // Dispose shared resources once, without changing any imported material or geometry.
@@ -46,6 +48,10 @@ export default function ModelViewer({ active }: { active: boolean }) {
   useEffect(() => {
     const element = host.current
     if (!element) return
+    const capability = fullModelCapability()
+    // Synchronize the UI with the actual device capability probe.
+    // oxlint-disable-next-line react/set-state-in-effect
+    if (capability !== 'supported') { setState(capability === 'webgl' ? 'webgl' : 'unsupported'); return }
     let renderer: THREE.WebGLRenderer
     try { renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true }) }
     catch {
@@ -53,6 +59,9 @@ export default function ModelViewer({ active }: { active: boolean }) {
       // oxlint-disable-next-line react/set-state-in-effect
       setState('webgl')
       return
+    }
+    if (renderer.capabilities.maxTextureSize < 8192) {
+      renderer.dispose(); renderer.forceContextLoss(); setState('unsupported'); return
     }
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, window.innerWidth < 700 ? 1.5 : 2))
     renderer.setClearColor(0x000000, 0)
@@ -151,7 +160,8 @@ export default function ModelViewer({ active }: { active: boolean }) {
     }
     const onInteraction = () => { hasInteracted = true; controls.autoRotate = false; requestDraw() }
     const resize = () => {
-      const { width, height } = element.getBoundingClientRect()
+      const box = element.getBoundingClientRect()
+      const width = Math.min(box.width, box.height * 10 / 7), height = width * 7 / 10
       if (!width || !height) return
       camera.aspect = width / height
       camera.updateProjectionMatrix()
@@ -162,7 +172,16 @@ export default function ModelViewer({ active }: { active: boolean }) {
     const onVisibility = () => { if (document.hidden) pause(); else requestDraw() }
     const onMotionChange = () => { controls.autoRotate = !hasInteracted && !reducedMotion.matches; requestDraw() }
     const onContextLost = (event: Event) => { event.preventDefault(); contextLost = true; pause(); setState('webgl') }
-    const onContextRestored = () => { contextLost = false; setState(shell ? 'ready' : 'loading'); requestDraw() }
+    const onContextRestored = () => {
+      contextLost = false
+      if (!shell) { setState('loading'); return }
+      setState('preparing')
+      void renderer.compileAsync(scene, camera).then(() => {
+        if (disposed || contextLost) return
+        renderer.render(scene, camera)
+        setState('ready'); requestDraw()
+      }).catch(() => { if (!disposed) setState('webgl') })
+    }
     const observer = new IntersectionObserver(([entry]) => {
       inView = entry.isIntersecting
       if (inView) requestDraw(); else pause()
@@ -187,8 +206,11 @@ export default function ModelViewer({ active }: { active: boolean }) {
         // Let preparation feedback paint before main-thread parsing and GPU setup.
         await new Promise(resolve => window.setTimeout(resolve, 32))
         if (disposed) return
+        const parseStart = performance.now()
         const loader = new GLTFLoader()
         const gltf = await loader.parseAsync(buffer, new URL('.', new URL(PENTIMENTO_GLB, location.href)).href)
+        performance.measure('pentimento:model-parse', { start: parseStart, end: performance.now() })
+        const prepareStart = performance.now()
         imported = gltf.scene
         if (disposed) { disposeObject(imported); return }
         shell = prepareCustomGLBShell(imported)
@@ -216,9 +238,21 @@ export default function ModelViewer({ active }: { active: boolean }) {
             requestDraw()
           },
         }
+        performance.measure('pentimento:scene-preparation', { start: prepareStart, end: performance.now() })
+        const shaderStart = performance.now()
         await renderer.compileAsync(scene, camera)
+        performance.measure('pentimento:shader-preparation', { start: shaderStart, end: performance.now() })
+        const renderStart = performance.now()
         if (disposed) return
-        if (!contextLost) renderer.render(scene, camera)
+        if (!contextLost) {
+          renderer.render(scene, camera)
+          // Keep the still through the first submitted frame; allow the canvas to paint.
+          await new Promise<void>(resolve => requestAnimationFrame(() => resolve()))
+        }
+        if (disposed) return
+        performance.measure('pentimento:first-frame', { start: renderStart, end: performance.now() })
+        const selection = performance.getEntriesByName('pentimento:model-selected').at(-1)
+        if (selection) performance.measure('pentimento:selection-to-ready', { start: selection.startTime, end: performance.now() })
         setState(contextLost ? 'webgl' : 'ready')
         requestDraw()
       } catch (error) {
@@ -258,6 +292,7 @@ export default function ModelViewer({ active }: { active: boolean }) {
 
   return <>
     <div className="pentimento-visual model-visual">
+      <ModelPoster ready={state === 'ready'} />
       <div ref={host} className="object-canvas" role="group" tabIndex={active && state === 'ready' ? 0 : -1} aria-label="Interactive Pentimento reconstruction. Drag to orbit, scroll or pinch to zoom. Arrow keys rotate; plus and minus zoom." aria-busy={state === 'loading' || state === 'preparing'} data-model-state={state} onKeyDown={event => {
         if (['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', '+', '=', '-'].includes(event.key)) event.preventDefault()
         if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') actions.current?.orbit(event.key === 'ArrowLeft' ? -1 : 1)
@@ -266,13 +301,13 @@ export default function ModelViewer({ active }: { active: boolean }) {
       }} />
       {(state === 'loading' || state === 'preparing') && <ModelLoading preparing={state === 'preparing'} />}
       {state === 'ready' && <span className="sr-only" role="status">Reconstruction ready.</span>}
-      {(state === 'error' || state === 'webgl') && <div className="media-message mono" role="status">
-        <span>{state === 'webgl' ? '3D VIEW REQUIRES WEBGL. INPUT VIDEO IS STILL AVAILABLE.' : invalidGeometry ? 'NO VIEWABLE GEOMETRY IN THIS GLB.' : 'RECONSTRUCTION COULD NOT BE LOADED.'}</span>
+      {(state === 'error' || state === 'webgl' || state === 'unsupported') && <div className="media-message mono" role="status">
+        <span>{state === 'unsupported' ? 'FULL-RESOLUTION 3D REQUIRES 8K TEXTURE SUPPORT. SHOWING THE REAL RECONSTRUCTION STILL.' : state === 'webgl' ? '3D VIEW REQUIRES WEBGL. SHOWING THE REAL RECONSTRUCTION STILL.' : invalidGeometry ? 'NO VIEWABLE GEOMETRY IN THIS GLB.' : 'RECONSTRUCTION COULD NOT BE LOADED.'}</span>
         {state === 'error' && <button className="model-retry" onClick={() => { setState('loading'); setAttempt(value => value + 1) }}>Retry</button>}
       </div>}
     </div>
     <div className="viewer-bottom">
-      <span className="mono viewer-hint">FINAL / 3D RECONSTRUCTION<span className="model-gesture-hint">DRAG TO INSPECT · SCROLL / PINCH TO ZOOM</span></span>
+      <span className="mono viewer-hint">{state === 'ready' ? 'FINAL / 3D RECONSTRUCTION' : 'FINAL / RECONSTRUCTION STILL'}{state === 'ready' && <span className="model-gesture-hint">DRAG TO INSPECT · SCROLL / PINCH TO ZOOM</span>}</span>
       <div className="viewer-controls">
         <button onClick={() => actions.current?.zoom(-1)} disabled={state !== 'ready'} aria-label="Zoom out">−</button>
         <button onClick={() => actions.current?.zoom(1)} disabled={state !== 'ready'} aria-label="Zoom in">+</button>

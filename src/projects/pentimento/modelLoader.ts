@@ -34,12 +34,12 @@ export function createModelLoader(dependencies: Dependencies = {}) {
   const listeners = new Set<() => void>()
   const publish = (next: DownloadSnapshot) => { snapshot = next; listeners.forEach(listener => listener()) }
 
-  const request = (): Promise<ArrayBuffer> => {
+  const request = (priority: 'auto' | 'high' | 'low' = 'auto'): Promise<ArrayBuffer> => {
     if (bytes) return Promise.resolve(bytes)
     if (flight) {
       // A rapid route remount may arrive while the previous abort is still settling.
       // Wait for that stream to release its resources, then start exactly one fresh request.
-      if (controller?.signal.aborted) return flight.then(request, request)
+      if (controller?.signal.aborted) return flight.then(() => request(priority), () => request(priority))
       return flight
     }
     const abort = new AbortController()
@@ -67,7 +67,8 @@ export function createModelLoader(dependencies: Dependencies = {}) {
         } catch { /* A failed cache read falls through to the normal HTTP request. */ }
       }
       abort.signal.throwIfAborted()
-      const response = await fetchModel(url, { signal: abort.signal })
+      const downloadStart = performance.now()
+      const response = await fetchModel(url, { signal: abort.signal, priority })
       if (!response.ok) throw new Error(`Model request failed: ${response.status}`)
       const length = Number(response.headers.get('content-length'))
       // Content-Length can describe encoded transport bytes; never use it for decoded-body percentages.
@@ -111,6 +112,7 @@ export function createModelLoader(dependencies: Dependencies = {}) {
       } else buffer = await response.arrayBuffer()
       abort.signal.throwIfAborted()
       validate(buffer)
+      performance.measure('pentimento:model-download', { start: downloadStart, end: performance.now() })
       bytes = buffer
       publish({ phase: 'downloaded', received: buffer.byteLength, total: buffer.byteLength, source: 'network' })
       if (cache) {
@@ -146,6 +148,6 @@ export function createModelLoader(dependencies: Dependencies = {}) {
 export const pentimentoModelLoader = createModelLoader()
 
 export function canPrefetchModel() {
-  const connection = (navigator as Navigator & { connection?: { saveData?: boolean; effectiveType?: string } }).connection
-  return !connection?.saveData && !['slow-2g', '2g', '3g'].includes(connection?.effectiveType ?? '')
+  const connection = (navigator as Navigator & { connection?: { saveData?: boolean; effectiveType?: string; downlink?: number; rtt?: number } }).connection
+  return !(connection?.downlink !== undefined && connection.downlink < 8) && !(connection?.rtt !== undefined && connection.rtt > 300) && !connection?.saveData && !['slow-2g', '2g', '3g'].includes(connection?.effectiveType ?? '')
 }

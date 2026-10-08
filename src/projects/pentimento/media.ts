@@ -1,6 +1,7 @@
-import { mediaUrl } from '../../data/media/config'
+import { mediaUrl, localMedia } from '../../data/media/config'
 
-// The payload is unchanged; only its delivery location is configurable.
-export const PENTIMENTO_GLB = mediaUrl('pentimento.model')
-export const PENTIMENTO_INPUT_VIDEO = mediaUrl('pentimento.input-video')
-export const PENTIMENTO_PLAYBACK_RATE = 5
+export const PENTIMENTO_GLB = mediaUrl('pentimento.model-binary-repacked')
+export const PENTIMENTO_INPUT_VIDEO = mediaUrl('pentimento.input-video-web')
+export const PENTIMENTO_PLAYBACK_RATE = 1
+export const PENTIMENTO_INPUT_POSTER = localMedia('media/projects/pentimento/input-poster.webp')
+export const PENTIMENTO_MODEL_STILL = localMedia('media/projects/pentimento/model-still.webp')

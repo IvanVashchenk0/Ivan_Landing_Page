@@ -8,7 +8,7 @@ export function ModelLoading({ preparing = false }: { preparing?: boolean }) {
   const percent = download.total ? Math.min(99, Math.floor(download.received / download.total * 100)) : null
   const mib = (bytes: number) => (bytes / 1024 ** 2).toFixed(1)
   return <div className="media-message mono pentimento-loading" data-loading-phase={complete ? 'preparing' : download.phase}>
-    <span role="status">{complete ? 'PREPARING RECONSTRUCTION…' : 'LOADING RECONSTRUCTION'}</span>
+    <span role="status">{complete ? 'PREPARING INTERACTIVE MODEL…' : 'LOADING INTERACTIVE MODEL'}</span>
     {!complete && <div className="pentimento-download-details">
       {download.phase === 'downloading' && <>
         {download.total !== null && <progress aria-label="Full-resolution reconstruction download" max={download.total} value={Math.min(download.received, download.total)} />}

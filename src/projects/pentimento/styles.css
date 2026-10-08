@@ -42,3 +42,18 @@
     .pentimento-experience { height: 525px; min-height: 525px; }
   }
 }
+
+@layer components {
+  .pentimento-model-still { position:absolute; inset:0; width:100%; height:100%; object-fit:contain; opacity:1; transition:opacity 400ms ease; pointer-events:none; }
+  .pentimento-model-still[data-ready=true] { opacity:0; }
+  .pentimento-experience .object-canvas { opacity:0; transition:opacity 400ms ease; }
+  .pentimento-experience .object-canvas[data-model-state=ready] { opacity:1; }
+  .pentimento-experience .object-canvas canvas { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); }
+  .pentimento-experience .model-visual > .media-message { inset:auto 12px 12px; padding:10px 14px; gap:8px; background:#22271fb3; font-size:10px; align-items:flex-start; text-align:left; max-width:360px; }
+  .pentimento-experience .pentimento-loading { gap:6px; }
+  .pentimento-experience .pentimento-download-details { gap:5px; }
+  .pentimento-video-status { position:absolute; bottom:12px; left:12px; padding:10px; background:#22271fe6; color:#bac88c; font-size:10px; }
+}
+@media (prefers-reduced-motion:reduce) {
+  .pentimento-experience .pentimento-panel, .pentimento-experience .pentimento-switch-indicator, .pentimento-experience .pentimento-model-still, .pentimento-experience .object-canvas { transition:none; }
+}

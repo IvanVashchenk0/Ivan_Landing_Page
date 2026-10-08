@@ -109,6 +109,7 @@ test('locked previews remain interactive on AI without navigating from their con
   await expect(page).toHaveURL(/\/ai$/)
   const pentimento = page.locator('#pentimento')
   await pentimento.scrollIntoViewIfNeeded()
+  await pentimento.getByRole('button', { name: 'Play input video' }).click()
   await pentimento.getByRole('button', { name: 'Pause input video' }).click()
   await expect(pentimento.locator('video')).toHaveJSProperty('paused', true)
   await pentimento.getByRole('tab', { name: 'FINAL MODEL' }).click()

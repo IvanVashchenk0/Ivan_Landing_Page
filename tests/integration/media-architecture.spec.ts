@@ -75,6 +75,8 @@ test('sync uses SHA metadata and size, skips matches, uploads new versions, neve
     const run = async (args: string[]) => {
       commands.push(args)
       if (args[0] === '--version') return { code: 0, stdout: 'aws-cli/2.31.0', stderr: '' }
+      if (args[1] === 'list-profiles') return { code: 0, stdout: 'test\n', stderr: '' }
+      if (args[1] === 'head-bucket') return { code: 0, stdout: '', stderr: '' }
       if (args[1] === 'cp') { uploaded = true; return { code: 0, stdout: '', stderr: '' } }
       if (existing === 'missing' && !uploaded) return { code: 254, stdout: '', stderr: 'An error occurred (404)' }
       return { code: 0, stdout: JSON.stringify(existing === 'different' && !uploaded ? { ...head, Metadata: {} } : head), stderr: '' }
@@ -94,7 +96,7 @@ test('sync uses SHA metadata and size, skips matches, uploads new versions, neve
 
 test('sync fails closed on credentials or missing configuration and never echoes secrets', async () => {
   await expect(synchronize(manifest, { env: {}, run: () => { throw new Error('must not call CLI') } })).rejects.toThrow('MEDIA_BUCKET')
-  await expect(synchronize(manifest, { env: { MEDIA_BUCKET: 'test-bucket' }, run: async args => args[0] === '--version' ? { code: 0, stdout: 'aws-cli/2.0', stderr: '' } : { code: 254, stdout: '', stderr: '403 private-secret' } })).rejects.toThrow('credentials')
+  await expect(synchronize(manifest, { env: { R2_BUCKET: 'test-bucket', R2_ENDPOINT: 'https://example.r2.cloudflarestorage.com', AWS_ACCESS_KEY_ID: 'test-only', AWS_SECRET_ACCESS_KEY: 'test-only' }, run: async args => args[0] === '--version' ? { code: 0, stdout: 'aws-cli/2.0', stderr: '' } : { code: 254, stdout: '', stderr: '403 private-secret' } })).rejects.toThrow('credentials')
   const root = await mkdtemp(path.join(tmpdir(), 'ivan-secrets-'))
   try {
     const file = path.join(root, '.env.media.local')

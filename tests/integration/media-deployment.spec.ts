@@ -24,7 +24,9 @@ test('base-path browser/hash navigation and CDN-first development use the same m
       const project = root + (mode === 'hash' ? '#/' : '') + 'projects/pentimento'
       await page.addInitScript(() => Object.defineProperty(navigator, 'connection', {value:{saveData:true},configurable:true}))
       await page.goto(project)
-      await expect(page.locator('.pentimento-video')).toHaveAttribute('src','https://cdn.test.invalid/assets/' + manifest['pentimento.input-video'].remotePath)
+      await expect(page.locator('.pentimento-video')).toHaveAttribute('poster','/portfolio/media/projects/pentimento/input-poster.webp')
+      await page.getByRole('button',{name:'Play input video'}).click()
+      await expect(page.locator('.pentimento-video')).toHaveAttribute('src','https://cdn.test.invalid/assets/' + manifest['pentimento.input-video-web'].remotePath)
       await expect(page.locator('.pentimento-video')).toHaveJSProperty('paused',false)
       const localEndpoint = await context.request.get(root + '__media/' + manifest['pentimento.model'].remotePath)
       expect(localEndpoint.headers()['content-type']).not.toBe('model/gltf-binary')
