@@ -8,3 +8,5 @@ export const PENTIMENTO_INPUT_VIDEO = mediaUrl('pentimento.input-video-web')
 export const PENTIMENTO_PLAYBACK_RATE = 1
 export const PENTIMENTO_INPUT_POSTER = localMedia('media/projects/pentimento/input-poster.webp')
 export const PENTIMENTO_MODEL_STILL = localMedia('media/projects/pentimento/model-still.webp')
+export const PENTIMENTO_PROJECT_WEBSITE = localMedia('media/projects/pentimento/project-website.png')
+export const PENTIMENTO_PROJECT_PITCH_THUMBNAIL = localMedia('media/projects/pentimento/project-pitch-thumbnail.jpg')
