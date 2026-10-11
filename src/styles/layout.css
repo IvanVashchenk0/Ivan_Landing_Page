@@ -61,12 +61,8 @@
   .project-pentimento { min-height: 940px; }
   .site-footer { padding: 62px var(--page-gutter) 34px; border-top: 1px solid var(--line); display: grid; grid-template-columns: 1fr auto; gap: 52px; }
   .footer-name { font-size: 18px; letter-spacing: -.045em; font-weight: 500; }
-  .footer-name > span { display: block; color: var(--muted); margin-top: 12px; letter-spacing: .04em; }
-  .footer-socials { text-align: right; }
-  .social-links { display: flex; gap: 30px; font-size: 12px; }
-  .social-links a:hover { color: var(--olive); }
-  .unconfigured-link { color: var(--muted); }
-  .footer-note { display: block; margin-top: 12px; font-size: 9px; color: var(--muted); }
-  .footer-version { color: var(--muted); grid-column: 1 / -1; font-size: 9px; }
+  .footer-links { display: flex; gap: 30px; font-size: 12px; }
+  .footer-links a:hover { color: var(--olive); }
+  .footer-copyright { color: var(--muted); grid-column: 1 / -1; }
 }
 

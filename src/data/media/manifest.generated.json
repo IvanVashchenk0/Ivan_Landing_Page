@@ -62,6 +62,20 @@
     "sha256": "a1b239068faeba9f006362358d325de584a3f01e8c4db89459145f5a846d6bfd",
     "cacheControl": "public, max-age=31536000, immutable, no-transform"
   },
+  "editorial.linkedin-banner-source": {
+    "remotePath": "editorial/linkedin/banner.5745b591016b166851da3d439a50d5ae993c6be7ad0a8ab397d0ef3b08070391.png",
+    "mime": "image/png",
+    "size": 2378257,
+    "sha256": "5745b591016b166851da3d439a50d5ae993c6be7ad0a8ab397d0ef3b08070391",
+    "cacheControl": "public, max-age=31536000, immutable, no-transform"
+  },
+  "editorial.linkedin-profile-source": {
+    "remotePath": "editorial/linkedin/profile.9aedc2d62e04e1856800b08d82ccda8b3b700997da53bbd141fbbfa79fbda4b2.jpeg",
+    "mime": "image/jpeg",
+    "size": 198226,
+    "sha256": "9aedc2d62e04e1856800b08d82ccda8b3b700997da53bbd141fbbfa79fbda4b2",
+    "cacheControl": "public, max-age=31536000, immutable, no-transform"
+  },
   "image-recognition.blur-source": {
     "remotePath": "projects/image-recognition/blur.b3e9bcd04b9d43153c13c96161df13d12ff6ed0d9ef958c872cb7608136ba507.png",
     "mime": "image/png",

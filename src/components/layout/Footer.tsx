@@ -1,15 +1,15 @@
 import { Link } from 'react-router'
-import { socialLinks } from '../../data/navigation/index'
+import { contact } from '../../data/contact'
 
 export function Footer() {
   return <footer className="site-footer" id="footer">
-    <Link to="/" className="footer-name">IVAN VASHCHENKO<span className="mono">AN ONGOING EXPLORATION.</span></Link>
-    <div className="footer-socials">
-      <div className="social-links">{socialLinks.map(link => link.href
-        ? <a key={link.label} href={link.href} target={link.href.startsWith('mailto:') ? undefined : '_blank'} rel="noreferrer">{link.label} ↗</a>
-        : <span key={link.label} className="unconfigured-link" title="Link coming soon">{link.label} ↗</span>)}</div>
-      {socialLinks.every(link => !link.href) && <span className="mono footer-note">LINKS COMING SOON</span>}
-    </div>
-    <span className="footer-version mono">© {new Date().getFullYear()} / V0.1</span>
+    <Link to="/" className="footer-name">IVAN VASHCHENKO</Link>
+    <nav className="footer-links" aria-label="Footer">
+      <a href={contact.linkedin.href} target="_blank" rel="noopener noreferrer">LINKEDIN ↗</a>
+      <a href={contact.github.href} target="_blank" rel="noopener noreferrer">GITHUB ↗</a>
+      <a href={contact.email.href}>EMAIL ↗</a>
+      <Link to="/contact">CONTACT →</Link>
+    </nav>
+    <span className="footer-copyright mono">© {new Date().getFullYear()}</span>
   </footer>
 }

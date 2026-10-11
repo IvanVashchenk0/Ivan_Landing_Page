@@ -13,8 +13,9 @@ test('identity and category navigation lead to their own pages', async ({ page }
   await expect(page.locator('.project-section')).toHaveCount(8)
   await page.getByRole('navigation', { name: 'Primary' }).getByRole('link', { name: 'ME', exact: true }).click()
   await expect(page.locator('.project-section')).toHaveCount(8)
-  await page.getByRole('navigation', { name: 'Primary' }).getByRole('link', { name: 'Leadership' }).click()
-  await expect(page.getByRole('heading', { name: 'Built with others.' })).toBeVisible()
+  await page.getByRole('navigation', { name: 'Primary' }).getByRole('link', { name: 'Contact' }).click()
+  await expect(page).toHaveURL(/\/contact$/)
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('CONTACT.')
 })
 
 test('Argus embeds the real demonstration at 55 seconds without autoplay', async ({ page }) => {
@@ -107,7 +108,7 @@ test('3D fallback remains readable without WebGL', async ({ page }) => {
 })
 
 test('direct routes load and unknown routes have a return link', async ({ page }) => {
-  for (const path of ['/ivan', '/ai', '/me', '/leadership', '/projects/argus', '/projects/pentimento', '/projects/monte-carlo']) {
+  for (const path of ['/ivan', '/ai', '/me', '/contact', '/projects/argus', '/projects/pentimento', '/projects/monte-carlo']) {
     await page.goto(path)
     await expect(page.getByRole('heading', { level: 1 })).toBeVisible()
     await expect(page.getByText('404 / OUTSIDE THE INDEX')).toHaveCount(0)
@@ -125,7 +126,7 @@ test('mobile pages and all homepage sections fit the viewport', async ({ page })
     expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(390)
   }
   await page.screenshot({ path: test.info().outputPath('home-mobile.png'), fullPage: true })
-  for (const path of ['/ivan', '/ai', '/me', '/leadership']) {
+  for (const path of ['/ivan', '/ai', '/me', '/contact']) {
     await page.goto(path)
     expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(390)
   }

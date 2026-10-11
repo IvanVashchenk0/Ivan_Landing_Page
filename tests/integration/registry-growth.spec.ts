@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test'
 
 test('project seventeen participates through registry data and generic preview/detail/navigation', async ({ page }) => {
-  await page.goto('/leadership')
+  await page.goto('/contact')
   const result = await page.evaluate(async () => (await import('/tests/fixtures/growth.tsx')).inspectGrowth())
   expect(result.count).toBe(17)
   expect(result.order.at(-1)).toBe('test-seventeen')
@@ -12,7 +12,7 @@ test('project seventeen participates through registry data and generic preview/d
   await expect(page.locator('#test-seventeen')).toContainText('09')
   await expect(page.getByRole('button', { name: 'Test custom experience' })).toBeVisible()
   await expect(page.locator('#test-seventeen').getByRole('link', { name: 'EXPLORE PROJECT' })).toHaveAttribute('href','/projects/test-seventeen')
-  await page.goto('/leadership')
+  await page.goto('/contact')
   await page.evaluate(async () => (await import('/tests/fixtures/growth.tsx')).mountGrowth('project'))
   await expect(page.getByText('Test detailed content')).toBeVisible()
   await expect(page.getByRole('link', { name: /PREVIOUS PROJECT/ })).toHaveAttribute('href','/projects/peggame-solver')
@@ -20,14 +20,14 @@ test('project seventeen participates through registry data and generic preview/d
 })
 
 test('editorial record seven receives default layout and independent strip placement', async ({ page }) => {
-  await page.goto('/leadership')
+  await page.goto('/contact')
   await page.evaluate(async () => (await import('/tests/fixtures/growth.tsx')).mountGrowth('editorial'))
   await expect(page.locator('#record-test-seven')).toHaveClass('ivan-record ivan-record-lead')
   await expect(page.locator('#record-test-seven img')).toHaveAttribute('width','800')
   const result = await page.evaluate(async () => (await import('/tests/fixtures/growth.tsx')).inspectGrowth())
   expect(result.editorial.at(-1)).toBe('test-seven')
   expect(result.strip[0]).toBe('test-seven')
-  await page.goto('/leadership')
+  await page.goto('/contact')
   await page.emulateMedia({ reducedMotion:'reduce' })
   await page.evaluate(async () => (await import('/tests/fixtures/growth.tsx')).mountGrowth('strip'))
   await expect(page.locator('[data-canonical=true] li').first()).toHaveAttribute('data-record','test-seven')
