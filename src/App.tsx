@@ -23,7 +23,7 @@ export default function App() {
     document.title = pathname === '/contact' ? 'Contact | Ivan Vashchenko' : name && name !== 'Ivan Vashchenko' ? `${name} — Ivan Vashchenko` : 'Ivan Vashchenko'
     const description = document.querySelector<HTMLMetaElement>('meta[name="description"]')
     if (description) description.content = pathname === '/contact'
-      ? 'Contact Ivan Vashchenko via LinkedIn, GitHub, email, or phone.'
+      ? 'Contact Ivan Vashchenko via LinkedIn, email, or phone.'
       : 'Ivan Vashchenko — an interactive collection of explorations in artificial intelligence, mechanical engineering, and the possibilities in between.'
   }, [pathname])
   return <>

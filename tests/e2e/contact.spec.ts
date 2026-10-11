@@ -2,7 +2,6 @@ import { expect, test } from '@playwright/test'
 import { projects } from '../../src/data/projects/index'
 
 const linkedin = 'https://www.linkedin.com/in/ivan-vashchenko'
-const github = 'https://github.com/IvanVashchenk0'
 const email = 'mailto:ivanvashchenko1756@gmail.com'
 const phone = 'tel:+17272367217'
 const headline = 'Engineering Automation | Mechanical Engineering + Computer Science | WTI Pure Air | ACMC Founder | Technical Strategy & AI Systems'
@@ -23,7 +22,7 @@ test('navigation replaces Leadership with Contact and the legacy route redirects
 test('Contact uses the authentic LinkedIn presentation and exact functional directory', async ({ page }) => {
   await page.goto('/contact')
   await expect(page).toHaveTitle('Contact | Ivan Vashchenko')
-  await expect(page.locator('meta[name="description"]')).toHaveAttribute('content', 'Contact Ivan Vashchenko via LinkedIn, GitHub, email, or phone.')
+  await expect(page.locator('meta[name="description"]')).toHaveAttribute('content', 'Contact Ivan Vashchenko via LinkedIn, email, or phone.')
   const card = page.getByRole('link', { name: 'View Ivan Vashchenko on LinkedIn' })
   await expect(card).toHaveAttribute('href', linkedin)
   await expect(card).toHaveAttribute('target', '_blank')
@@ -39,12 +38,10 @@ test('Contact uses the authentic LinkedIn presentation and exact functional dire
 
   const directory = page.locator('.contact-directory')
   const links = directory.getByRole('link')
-  await expect(links).toHaveCount(3)
-  await expect(links.nth(0)).toHaveAttribute('href', github)
-  await expect(links.nth(0)).toHaveAttribute('target', '_blank')
-  await expect(links.nth(0)).toHaveAttribute('rel', 'noopener noreferrer')
-  await expect(links.nth(1)).toHaveAttribute('href', email)
-  await expect(links.nth(2)).toHaveAttribute('href', phone)
+  await expect(links).toHaveCount(2)
+  await expect(links.nth(0)).toHaveAttribute('href', email)
+  await expect(links.nth(1)).toHaveAttribute('href', phone)
+  await expect(page.locator('a[href*="github.com"]')).toHaveCount(0)
 })
 
 test('one functional footer appears across the site with no temporary copy', async ({ page }) => {
@@ -54,15 +51,14 @@ test('one functional footer appears across the site with no temporary copy', asy
     await page.goto(route)
     const footer = page.locator('footer')
     await expect(footer).toHaveCount(1)
-    await expect(footer.getByRole('link')).toHaveText(['IVAN VASHCHENKO', 'LINKEDIN ↗', 'GITHUB ↗', 'EMAIL ↗', 'CONTACT →'])
+    await expect(footer.getByRole('link')).toHaveText(['IVAN VASHCHENKO', 'LINKEDIN ↗', 'EMAIL ↗', 'CONTACT →'])
     await expect(footer.getByRole('link', { name: 'LINKEDIN ↗' })).toHaveAttribute('href', linkedin)
     await expect(footer.getByRole('link', { name: 'LINKEDIN ↗' })).toHaveAttribute('rel', 'noopener noreferrer')
-    await expect(footer.getByRole('link', { name: 'GITHUB ↗' })).toHaveAttribute('href', github)
-    await expect(footer.getByRole('link', { name: 'GITHUB ↗' })).toHaveAttribute('rel', 'noopener noreferrer')
     await expect(footer.getByRole('link', { name: 'EMAIL ↗' })).toHaveAttribute('href', email)
     await expect(footer.getByRole('link', { name: 'CONTACT →' })).toHaveAttribute('href', '/contact')
     await expect(page.getByText('AN ONGOING EXPLORATION.', { exact: true })).toHaveCount(0)
     await expect(page.getByText('LINKS COMING SOON', { exact: true })).toHaveCount(0)
+    await expect(page.locator('a[href*="github.com"]')).toHaveCount(0)
     expect(await footer.locator('a').evaluateAll(anchors => anchors.every(anchor => Boolean(anchor.getAttribute('href')) && anchor.getAttribute('href') !== '#'))).toBe(true)
   }
 })

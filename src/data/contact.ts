@@ -1,6 +1,6 @@
 export interface ContactMethod {
-  id: 'linkedin' | 'github' | 'email' | 'phone'
-  label: 'LinkedIn' | 'GitHub' | 'Email' | 'Phone'
+  id: 'linkedin' | 'email' | 'phone'
+  label: 'LinkedIn' | 'Email' | 'Phone'
   displayValue: string
   href: string
   external: boolean
@@ -12,13 +12,6 @@ export const contact = {
     label: 'LinkedIn',
     displayValue: 'linkedin.com/in/ivan-vashchenko',
     href: 'https://www.linkedin.com/in/ivan-vashchenko',
-    external: true,
-  },
-  github: {
-    id: 'github',
-    label: 'GitHub',
-    displayValue: 'github.com/IvanVashchenk0',
-    href: 'https://github.com/IvanVashchenk0',
     external: true,
   },
   email: {
@@ -37,7 +30,7 @@ export const contact = {
   },
 } as const satisfies Record<string, ContactMethod>
 
-export const contactDirectory = [contact.github, contact.email, contact.phone] as const
+export const contactDirectory = [contact.email, contact.phone] as const
 
 export const linkedinProfile = {
   name: 'Ivan Vashchenko',
