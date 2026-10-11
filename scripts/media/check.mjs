@@ -4,8 +4,11 @@ import { execFileSync } from 'node:child_process'
 import { tmpdir } from 'node:os'
 import path from 'node:path'
 import { ROOT, PROJECTION, loadManifest, projection, walk } from './lib/manifest.mjs'
+import { loadLocalOnly, verifyLocalOnlyPublic } from './lib/local-only.mjs'
 try {
   const manifest = await loadManifest()
+  const localOnly = await loadLocalOnly()
+  const localDerivativeCount = await verifyLocalOnlyPublic(localOnly)
   if (JSON.stringify(JSON.parse(await readFile(PROJECTION, 'utf8'))) !== JSON.stringify(projection(manifest))) throw new Error('Browser manifest is stale. Run npm run media:manifest.')
   const skip = new Set(['node_modules', 'media-source', 'dist', 'test-results', 'playwright-report', 'test-results-deployment', 'test-results-media', 'coverage', '.git', '.cache', '.codex', '.agents', '.aws'])
   // No large tracked-file exceptions. Tiny test media live outside public/.
@@ -46,5 +49,5 @@ try {
       if (ignored) throw new Error(`Required file would be ignored: ${file}`)
     }
   } finally { await rm(temporary, { recursive: true, force: true }) }
-  console.log(`Media checks passed: ${Object.keys(manifest.assets).length} manifest entries; safe projection, references, public assets, file sizes and temporary Git ignore checks. Local originals were not required.`)
+  console.log(`Media checks passed: ${Object.keys(manifest.assets).length} remote manifest entries and ${localDerivativeCount} local-only derivatives; safe projection, references, public assets, file sizes and temporary Git ignore checks. Local originals were not required.`)
 } catch (error) { console.error(error.message); process.exitCode = 1 }

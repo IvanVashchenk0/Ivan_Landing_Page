@@ -1,0 +1,75 @@
+@layer components {
+  .sorting-preview { width:100%; max-width:1200px; margin-inline:auto; }
+  .sorting-preview-frame { position:relative; height:clamp(420px,42vw,620px); overflow:hidden; background:#f5f5ee; border:1px solid var(--line); }
+  .sorting-preview-frame img { display:block; width:100%; height:100%; object-fit:contain; padding:clamp(18px,4vw,58px); }
+  .sorting-preview-frame figcaption { position:absolute; left:12px; bottom:12px; padding:7px 9px; background:color-mix(in srgb,var(--paper) 90%,transparent); font-size:8px; }
+  .sorting-preview-note { margin-top:16px; color:var(--muted); font-size:9px; letter-spacing:.08em; }
+
+  .sorting-case-study { padding:0 var(--page-gutter) 76px; }
+  .sorting-exhibit { border-top:1px solid var(--line); padding:64px 0 84px; }
+  .sorting-exhibit>header { display:grid; grid-template-columns:74px minmax(0,1fr); gap:22px; align-items:start; margin-bottom:38px; }
+  .sorting-exhibit>header>.mono { padding-top:8px; color:var(--muted); font-size:10px; }
+  .sorting-exhibit h2 { font-size:clamp(32px,4.8vw,68px); font-weight:440; letter-spacing:-.055em; line-height:.94; }
+  .sorting-specification { display:flex; flex-wrap:wrap; gap:12px 34px; padding:18px 0; margin-bottom:42px; border-block:1px solid var(--line); font-size:9px; color:var(--muted); }
+  .sorting-design-sequence { display:grid; gap:54px; }
+  .sorting-figure { min-width:0; }
+  .sorting-image-button { display:block; width:100%; padding:0; border:0; background:#f5f5ee; color:inherit; cursor:zoom-in; overflow:hidden; }
+  .sorting-image-button img { display:block; width:100%; height:auto; }
+  .sorting-figure figcaption { margin-top:12px; color:var(--muted); font-size:8px; letter-spacing:.08em; }
+  .sorting-concept { max-width:1100px; }
+  .sorting-concept img,.sorting-primary-cad img,.sorting-cad-grid img,.sorting-assembly-drawing img { object-fit:contain; }
+  .sorting-primary-cad { width:min(100%,1100px); margin-left:auto; }
+  .sorting-primary-cad .sorting-image-button { padding:clamp(18px,4vw,56px); }
+  .sorting-cad-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px; align-items:start; }
+  .sorting-cad-grid .sorting-image-button { aspect-ratio:1/1; padding:18px; }
+  .sorting-cad-grid img { width:100%; height:100%; }
+  .sorting-cad-top { width:min(100%,392px); justify-self:center; }
+  .sorting-assembly-drawing .sorting-image-button { padding:clamp(10px,2vw,24px); }
+  .sorting-technical-note { max-width:760px; margin:42px 0 0; font-size:14px; line-height:1.75; }
+  .sorting-vision-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:18px; max-width:940px; margin-inline:auto; }
+  .sorting-vision-grid .sorting-image-button { background:#e9e9e1; }
+  .sorting-metadata { margin-top:16px; color:var(--muted); font-size:8px; line-height:1.7; }
+  .sorting-results { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); border-block:1px solid var(--line); }
+  .sorting-results>section { padding:32px 34px 38px 0; }
+  .sorting-results>section+section { padding-left:34px; border-left:1px solid var(--line); }
+  .sorting-results h3 { margin-bottom:28px; color:var(--muted); font-size:9px; }
+  .sorting-results ul { list-style:none; padding:0; margin:0; }
+  .sorting-results li { padding:15px 0; border-top:1px solid var(--line); font-size:clamp(16px,1.7vw,23px); line-height:1.35; letter-spacing:-.025em; }
+  .sorting-credit { margin-top:64px; padding-top:20px; border-top:1px solid var(--line); color:var(--muted); font-size:8px; line-height:1.7; }
+  .sorting-lightbox { width:min(94vw,1400px); max-width:none; max-height:94vh; padding:52px 20px 18px; border:1px solid var(--line); background:var(--paper); color:var(--ink); overflow:auto; }
+  .sorting-lightbox::backdrop { background:#20241fe8; }
+  .sorting-lightbox-close { position:fixed; top:max(3vh,12px); right:max(3vw,12px); z-index:1; min-width:88px; min-height:40px; border:1px solid var(--line); background:var(--paper); color:var(--ink); }
+  .sorting-lightbox figure { display:flex; min-height:calc(94vh - 72px); flex-direction:column; align-items:center; justify-content:center; }
+  .sorting-lightbox img { display:block; max-width:100%; max-height:calc(94vh - 110px); width:auto; height:auto; object-fit:contain; }
+  .sorting-lightbox figcaption { width:100%; margin-top:12px; color:var(--muted); font-size:8px; }
+}
+@layer responsive {
+  @media(max-width:767px) {
+    .sorting-preview-frame { height:auto; aspect-ratio:4/5; }
+    .sorting-preview-frame img { padding:18px; }
+    .sorting-preview-note { margin-top:13px; font-size:8px; }
+    .sorting-case-study { padding-bottom:46px; }
+    .sorting-exhibit { padding:42px 0 56px; }
+    .sorting-exhibit>header { display:block; margin-bottom:24px; }
+    .sorting-exhibit>header>.mono { display:block; padding:0 0 12px; font-size:8px; }
+    .sorting-exhibit h2 { font-size:clamp(32px,10vw,48px); }
+    .sorting-specification { display:grid; gap:11px; margin-bottom:28px; padding:15px 0; font-size:8px; }
+    .sorting-design-sequence { gap:34px; }
+    .sorting-cad-grid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
+    .sorting-cad-grid .sorting-image-button { padding:8px; }
+    .sorting-cad-top { grid-column:1 / -1; width:min(68%,392px); }
+    .sorting-figure figcaption { margin-top:9px; font-size:7px; line-height:1.5; }
+    .sorting-technical-note { margin-top:30px; font-size:13px; }
+    .sorting-vision-grid { grid-template-columns:1fr; gap:26px; }
+    .sorting-results { grid-template-columns:1fr; }
+    .sorting-results>section { padding:26px 0 30px; }
+    .sorting-results>section+section { padding-left:0; border-left:0; border-top:1px solid var(--line); }
+    .sorting-results h3 { margin-bottom:20px; }
+    .sorting-results li { font-size:17px; }
+    .sorting-credit { margin-top:46px; }
+    .sorting-lightbox { width:96vw; max-height:92vh; padding:58px 12px 14px; }
+    .sorting-lightbox-close { top:10px; right:10px; min-height:44px; }
+    .sorting-lightbox figure { min-height:calc(92vh - 80px); }
+    .sorting-lightbox img { max-height:calc(92vh - 126px); }
+  }
+}

@@ -51,11 +51,12 @@ export async function loadManifest(file = MANIFEST) {
 export function projection(manifest) {
   return Object.fromEntries(Object.entries(manifest.assets).map(([id, { sourcePath: _source, ...publicAsset }]) => [id, publicAsset]))
 }
-export async function verifySources(manifest, sourceRoot = SOURCE) {
+export async function verifySources(manifest, sourceRoot = SOURCE, ignoredPrefixes = []) {
   const files = await walk(sourceRoot, new Set(), true)
   const registered = new Set(Object.values(manifest.assets).map(asset => asset.sourcePath))
   for (const file of files) {
     const relative = path.relative(sourceRoot, file).split(path.sep).join('/')
+    if (ignoredPrefixes.some(prefix => relative === prefix || relative.startsWith(`${prefix}/`))) continue
     if (!registered.has(relative)) throw new Error(`Unregistered media: ${relative}. Run npm run media:manifest first.`)
   }
   const realRoot = await realpath(sourceRoot)

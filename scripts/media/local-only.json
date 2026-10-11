@@ -1,0 +1,127 @@
+{
+  "version": 1,
+  "collections": {
+    "projects/autonomous-sorting": {
+      "publicPath": "public/media/projects/autonomous-sorting",
+      "publicSourcePrefix": "web/",
+      "files": {
+        "sorting_portfolio_assets.zip": {
+          "size": 2373209,
+          "sha256": "e59b4c8f105e440deb62a56d9f98671594d4e1fbfea03e102382881345d321a7"
+        },
+        "source/01-prototype-complete.jpg": {
+          "size": 123253,
+          "sha256": "2649d2100805913d7048932afa315c9341318ea683e009dabc1a67c31a72498c"
+        },
+        "source/02-prototype-side.jpg": {
+          "size": 131525,
+          "sha256": "b386cf5ffa1c50b6c5c7ee7456e0916f01fdc49f602275bb4c457fc7efc5bdd6"
+        },
+        "source/03-mechanism-closeup.jpg": {
+          "size": 126136,
+          "sha256": "78fc245e84534f5cf4cd7d785452f87146bfb9b16944ce8df013b3af806ce2ba"
+        },
+        "source/04-hopper-closeup.jpg": {
+          "size": 78402,
+          "sha256": "22f6785b1262ec91a6d707d73354d30eb4ddbfd68f1e04440f5123e590ed0376"
+        },
+        "source/05-prototype-workbench.jpg": {
+          "size": 131740,
+          "sha256": "613a3276b6c18577701af4e1667e22090ff7184dfa2e2a9236bf26870df11193"
+        },
+        "source/06-assembly-workbench.jpg": {
+          "size": 99739,
+          "sha256": "a5db6695b256a0bbd3b8eb5d057484dc472879e0d55cdffe87cb975a169c3436"
+        },
+        "source/07-cad-isometric.jpg": {
+          "size": 89186,
+          "sha256": "ad95ad32d016e8c73a01cf33187c196734eb5ebed07e78c7c232cd2edc05a3a0"
+        },
+        "source/08-cad-front.jpg": {
+          "size": 96392,
+          "sha256": "f9cdad9a819b3f08c5e9f1dd2877abbc897ed3d6be43edac5c6d846caf03212b"
+        },
+        "source/09-cad-side.jpg": {
+          "size": 58206,
+          "sha256": "470784f7deaf52744c6b5f33d7ec322e32028d0df9ea2388d6c18e459960dede"
+        },
+        "source/10-cad-top.jpg": {
+          "size": 23261,
+          "sha256": "77d5b796a02ba2a39a90d3b721bc36a8536498ae8ab282a05b9c1dc5f0aa50c2"
+        },
+        "source/11-vision-result.jpg": {
+          "size": 63224,
+          "sha256": "1594b05a00cd1389b284a6aa6ba03e068660bf82cb0b593146b8e483ad89dfe6"
+        },
+        "source/12-vision-result-alt.jpg": {
+          "size": 75827,
+          "sha256": "b122a8fbd97ade29739424c5535e5150c3e23583f80e7683cc5bbaabaebee7f5"
+        },
+        "source/13-original-concept-sketch.jpg": {
+          "size": 144485,
+          "sha256": "f5f4944a2002d090da56c650b2735ba473df9c49f227590567939656e68cb105"
+        },
+        "source/14-cad-assembly-drawing.png": {
+          "size": 211627,
+          "sha256": "edbeee6fee3f65275d92be7f7758757967fe147a36d9ca4126a245d1ee59e53d"
+        },
+        "web/01-prototype-complete.webp": {
+          "size": 111192,
+          "sha256": "6032d4c8ede8a27d3c7d58ed4afd2b95f20cf30ee8608b5e897b601f4fecd485"
+        },
+        "web/02-prototype-side.webp": {
+          "size": 117998,
+          "sha256": "d3bbde5fc827617d8f4bb5a2f9f274abc471551adf9ce7e78dccc072eabbe4b4"
+        },
+        "web/03-mechanism-closeup.webp": {
+          "size": 112898,
+          "sha256": "eb49c089f5476bf9a109f1c7a48a34616b70e3a80c5d52517cc2bbc2625bef01"
+        },
+        "web/04-hopper-closeup.webp": {
+          "size": 59130,
+          "sha256": "e8aae586650231afc35f4d749635142a88514db7ef5c189460403334e3c8dd0c"
+        },
+        "web/05-prototype-workbench.webp": {
+          "size": 139132,
+          "sha256": "e726e4595f4873c18db3ec77f80b9dd5df5636a9737a0f960021898c989d0e20"
+        },
+        "web/06-assembly-workbench.webp": {
+          "size": 84370,
+          "sha256": "178b49c78051f4a5d13f235003b6ef8beb4975706a263d513ab1bb132f7a39e8"
+        },
+        "web/07-cad-isometric.webp": {
+          "size": 32258,
+          "sha256": "7d4caf95aa654aad163db61d4a8d4881b508019e4afc76dd9d7f3e8809b5d88d"
+        },
+        "web/08-cad-front.webp": {
+          "size": 19200,
+          "sha256": "617f03a8f50eb5f65ef1c4e4c346547947efda0b74f1cca6a8b04d4a6a21ad51"
+        },
+        "web/09-cad-side.webp": {
+          "size": 22784,
+          "sha256": "65f0528e1f8f91216febea8c1bf5837218ad797bca7f7691bee3d8e7a7920c91"
+        },
+        "web/10-cad-top.webp": {
+          "size": 9732,
+          "sha256": "bc6fad8addba5c50da18c1ca7d9a821b656e25df3a7fc247aeb125652e8188ab"
+        },
+        "web/11-vision-result.webp": {
+          "size": 49748,
+          "sha256": "a90ec74752164683515518f339930b52df5923df09a2c5fb7b53f9d43d5f7cda"
+        },
+        "web/12-vision-result-alt.webp": {
+          "size": 66616,
+          "sha256": "02fc4e2d0b5e2e24c504500ef5395e40c5018adabc1ec54610ea9c1d5595451e"
+        },
+        "web/13-original-concept-sketch.webp": {
+          "size": 84320,
+          "sha256": "216926fa6c10ae8635a0c236107e7e9b0d9ded71004dd1028cd57293feb7f00f"
+        },
+        "web/14-cad-assembly-drawing.webp": {
+          "size": 63616,
+          "sha256": "136ade117898a3db1ef6f593f717fa3f56ab0290c0a41d03d0d32d2932f63dba"
+        }
+      }
+    }
+  }
+}

@@ -2,6 +2,8 @@
 
 Heavy originals live in ignored `media-source/`. Back them up separately; a future Git checkout intentionally will not contain them. Copying an original into `public/` is not a deployment strategy. Lightweight derivatives remain committed and buildable without macOS, Pillow, AWS, or originals.
 
+Small, browser-ready project image collections that intentionally deploy with Vercel are recorded separately in `scripts/media/local-only.json`. This inventory preserves source hashes and verifies exact public copies without creating R2 asset IDs. Autonomous Sorting Machine is the first such collection; its source ZIP and originals remain ignored while its 14 supplied WebPs are committed unchanged.
+
 | Logical ID | Canonical path relative to media-source |
 |---|---|
 | pentimento.model | projects/pentimento/Textured_mesh_1.glb |

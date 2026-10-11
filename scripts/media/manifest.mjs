@@ -1,6 +1,7 @@
 import path from 'node:path'
 import { stat } from 'node:fs/promises'
 import { MANIFEST, MIME, PROJECTION, SOURCE, hashFile, loadManifest, projection, remotePath, safeRelative, walk, writeJSON } from './lib/manifest.mjs'
+import { isLocalOnly, loadLocalOnly } from './lib/local-only.mjs'
 
 try {
   const args = process.argv.slice(2)
@@ -14,10 +15,12 @@ try {
     registrations.set(safeRelative(source), id)
   }
   const previous = await loadManifest()
+  const localOnly = await loadLocalOnly()
   const bySource = new Map(Object.entries(previous.assets).map(([id, asset]) => [asset.sourcePath, { id, ...asset }]))
   const entries = []
   for (const file of await walk(SOURCE, new Set(), true)) {
     const sourcePath = path.relative(SOURCE, file).split(path.sep).join('/')
+    if (isLocalOnly(sourcePath, localOnly)) continue
     const old = bySource.get(sourcePath)
     const sha256 = await hashFile(file), size = (await stat(file)).size
     if (old && old.sha256 !== sha256 && !update) throw new Error(`Changed original: ${old.id}. Use --update-existing only for an intentional new source version.`)
