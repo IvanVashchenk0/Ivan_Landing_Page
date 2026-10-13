@@ -192,6 +192,22 @@
       "size": 112528163,
       "sha256": "70a94bc33da656976e08ca0f26a97b9f678ef745d37e7e409e99f0bd421d0aeb",
       "cacheControl": "public, max-age=31536000, immutable, no-transform"
+    },
+    "thermal-home.original": {
+      "sourcePath": "projects/thermal-home-modeling/thermal-home-pipeline.mov",
+      "remotePath": "projects/thermal-home-modeling/thermal-home-pipeline.65bb545db700ace1fc8c327c3d71fa136548b1341daaee04d81fec756fb95479.mov",
+      "mime": "video/quicktime",
+      "size": 32237916,
+      "sha256": "65bb545db700ace1fc8c327c3d71fa136548b1341daaee04d81fec756fb95479",
+      "cacheControl": "public, max-age=31536000, immutable, no-transform"
+    },
+    "thermal-home.preview": {
+      "sourcePath": "projects/thermal-home-modeling/thermal-home-pipeline-web.mp4",
+      "remotePath": "projects/thermal-home-modeling/thermal-home-pipeline-web.b4ae4a65716b3f8d242ff7d87f22a9e07bacef67ec77dc59490bc14b0c8c7d00.mp4",
+      "mime": "video/mp4",
+      "size": 6911869,
+      "sha256": "b4ae4a65716b3f8d242ff7d87f22a9e07bacef67ec77dc59490bc14b0c8c7d00",
+      "cacheControl": "public, max-age=31536000, immutable, no-transform"
     }
   }
 }

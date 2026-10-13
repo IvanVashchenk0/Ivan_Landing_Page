@@ -20,6 +20,7 @@
     "media:repack-pentimento": "node scripts/media/repack-pentimento.mjs",
     "media:prepare-pentimento": "python3 scripts/media/prepare/prepare-pentimento.py",
     "media:prepare-image-recognition": "node scripts/media/prepare-image-recognition.mjs",
+    "media:prepare-thermal-home": "node scripts/media/prepare-thermal-home.mjs",
     "media:prepare-linkedin": "python3 scripts/media/prepare-linkedin-profile.py --source media-source/editorial/linkedin --output public/media/editorial/linkedin"
   },
   "dependencies": {

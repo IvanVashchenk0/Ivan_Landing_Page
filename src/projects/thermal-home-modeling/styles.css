@@ -1,0 +1,26 @@
+@layer components {
+  .thermal-home-preview { width:100%; max-width:1360px; margin-inline:auto; }
+  .thermal-home-video-frame { position:relative; width:100%; aspect-ratio:1470/773; overflow:hidden; border:1px solid var(--line); background:#f8f8f4; }
+  .thermal-home-video-frame video { display:block; width:100%; height:100%; object-fit:contain; background:#f8f8f4; }
+  .thermal-home-video-play { position:absolute; inset:0; width:100%; border:0; background:#f8f8f41a; color:var(--ink); font-size:10px; letter-spacing:.1em; opacity:0; transition:opacity 180ms ease,background-color 180ms ease; }
+  .thermal-home-video-frame:hover .thermal-home-video-play,.thermal-home-video-play:focus-visible { opacity:1; background:#f8f8f4d9; }
+  .thermal-home-video-controls { position:absolute; right:10px; bottom:10px; display:flex; gap:6px; }
+  .thermal-home-video-controls button { min-height:38px; padding:8px 11px; border:1px solid #2a2d2770; background:#f1f1ebe8; color:var(--ink); font:inherit; font-size:8px; letter-spacing:.05em; }
+  .thermal-home-video-controls button:hover { background:#fff; }
+  .thermal-home-video-error { position:absolute; left:10px; bottom:10px; padding:11px; border:1px solid var(--line); background:var(--paper); color:var(--ink); font-size:9px; }
+  .thermal-home-video-error button { margin-left:10px; padding:6px 10px; border:1px solid var(--line); background:transparent; color:inherit; font:inherit; }
+}
+
+@layer responsive {
+  @media(max-width:700px) {
+    .thermal-home-video-play { opacity:1; top:auto; height:48px; background:#f8f8f4df; }
+    .thermal-home-video-controls { position:static; min-height:48px; justify-content:flex-end; align-items:center; padding:5px; border-top:1px solid var(--line); background:var(--paper); }
+    .thermal-home-video-frame { aspect-ratio:auto; overflow:visible; }
+    .thermal-home-video-frame video { aspect-ratio:1470/773; }
+    .thermal-home-video-controls button { min-height:38px; }
+  }
+}
+
+@media(prefers-reduced-motion:reduce) {
+  .thermal-home-video-play { transition:none; opacity:1; }
+}
