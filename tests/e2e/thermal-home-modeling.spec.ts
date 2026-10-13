@@ -42,7 +42,7 @@ test('reduced motion retains the authentic poster until explicit playback', asyn
   await expect.poll(() => requests.length).toBe(1)
 })
 
-test('replay and fullscreen controls operate without changing the Explore route', async ({ page }) => {
+test('replay and fullscreen controls operate and Explore reuses the complete pipeline video', async ({ page }) => {
   await page.addInitScript(() => {
     Object.defineProperty(HTMLVideoElement.prototype, 'requestFullscreen', { configurable: true, value() { (window as typeof window & { thermalFullscreen?: number }).thermalFullscreen = ((window as typeof window & { thermalFullscreen?: number }).thermalFullscreen ?? 0) + 1; return Promise.resolve() } })
   })
@@ -58,8 +58,14 @@ test('replay and fullscreen controls operate without changing the Explore route'
   await expect.poll(() => page.evaluate(() => (window as typeof window & { thermalFullscreen?: number }).thermalFullscreen)).toBe(1)
   await section.getByRole('link', { name: 'EXPLORE PROJECT' }).click()
   await expect(page).toHaveURL(/\/projects\/thermal-home-modeling$/)
-  await expect(page.locator('.portfolio-placeholder')).toContainText('PROJECT CASE STUDY IN DEVELOPMENT')
-  await expect(page.locator('video')).toHaveCount(0)
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('THERMAL HOME MODELING')
+  await expect(page.getByText('PROJECT CASE STUDY IN DEVELOPMENT', { exact: true })).toHaveCount(0)
+  const projectVideo = page.getByLabel(label)
+  await expect(projectVideo).toHaveCount(1)
+  await expect(projectVideo).toHaveAttribute('src', /thermal-home-modeling\/thermal-home-pipeline-web\..+\.mp4$/)
+  await expect(projectVideo).toHaveAttribute('poster', /pipeline-poster\.webp$/)
+  await expect(page.getByRole('button', { name: 'REPLAY' })).toBeVisible()
+  await expect(page.getByRole('button', { name: 'FULLSCREEN' })).toBeVisible()
 })
 
 for (const viewport of [{ width: 1440, height: 900 }, { width: 390, height: 844 }]) {
